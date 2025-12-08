@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition'
 	import { Spring } from 'svelte/motion'
+	import Header from '$lib/Header.svelte'
 
 	// State for interactive elements
 	let expandedRole: string | null = $state(null)
@@ -14,25 +15,24 @@
 	const terminalGreeting = ['$ ./portfolio', 'Nathan', 'Full Stack Engineer']
 
 	const links = [
-		{ href: 'mailto:nathanmundo@icloud.com', label: 'Email', cmd: '[ mail ]' },
 		{ href: 'https://linkedin.com/in/nmundo', label: 'LinkedIn', cmd: '[ linkedin ]' },
 		{ href: 'https://github.com/nmundo', label: 'GitHub', cmd: '[ github ]' }
 	]
 
-	const experiences = [
-		{
-			id: 'ai-freelance',
-			title: 'AI Training - Freelance',
-			company: 'Freelance',
-			start: new Date('2025-01-01'),
-			end: new Date('2025-12-01'),
-			location: 'Remote',
-			points: [
-				'Contributed to projects training LLMs to generate production-ready code using RLHF.',
-				'Worked on various projects focused on UI using JavaScript, Tailwind, and React.'
-			],
-			tags: []
-		},
+	const experience = [
+		// {
+		// 	id: 'ai-freelance',
+		// 	title: 'AI Training - Freelance',
+		// 	company: 'Freelance',
+		// 	start: new Date('2025-01-01'),
+		// 	end: new Date('2025-12-01'),
+		// 	location: 'Remote',
+		// 	points: [
+		// 		'Contributed to projects training LLMs to generate production-ready code using RLHF.',
+		// 		'Worked on various projects focused on UI using JavaScript, Tailwind, and React.'
+		// 	],
+		// 	tags: ['React', 'Tailwind', 'JavaScript', 'Technical Writing']
+		// },
 		{
 			id: 'stiegler',
 			title: 'Senior Lecturer',
@@ -44,7 +44,15 @@
 				'Taught full-stack technologies including React, TypeScript, Spring Boot, and AWS.',
 				'Mentored a class of 35 students through real-world workflows and agile practices.'
 			],
-			tags: []
+			tags: [
+				'Teaching',
+				'React',
+				'TypeScript',
+				'Spring Boot',
+				'Java',
+				'Technical Writing',
+				'Mentoring'
+			]
 		},
 		{
 			id: 'bofa-1',
@@ -57,7 +65,7 @@
 				'Enhanced internal tooling with React and JavaScript for automated site generation.',
 				'Improved UI performance and integrated with Java Spring Boot APIs.'
 			],
-			tags: []
+			tags: ['React', 'JavaScript', 'Java', 'Spring Boot']
 		},
 		{
 			id: 'movement',
@@ -71,7 +79,7 @@
 				'Implemented CI/CD with GitHub Actions.',
 				'Worked with REST APIs and AWS cloud services.'
 			],
-			tags: []
+			tags: ['TypeScript', 'React', 'Express', 'CRM']
 		},
 		{
 			id: 'unique-loom',
@@ -84,7 +92,7 @@
 				'Led migration from Jinja templates to React/Node.',
 				'Built Algolia-powered instant search and AWS CI/CD pipelines.'
 			],
-			tags: []
+			tags: ['React', 'Node', 'Migration', 'Algolia', 'AWS', 'CI/CD']
 		},
 		{
 			id: 'bofa-2',
@@ -97,7 +105,7 @@
 				'Developed React front-end consuming secure Spring Boot APIs.',
 				'Worked in microservices architecture with offshore teams.'
 			],
-			tags: []
+			tags: ['React', 'Java', 'JSP', 'SQL']
 		},
 		{
 			id: 'hyde-park',
@@ -111,7 +119,7 @@
 				'Migrated legacy systems to React/Node.',
 				'Built reusable UI components and REST APIs.'
 			],
-			tags: []
+			tags: ['PL/SQL', 'Python', 'JavaScript', 'React', 'Node', 'ERP', 'jQuery']
 		},
 		{
 			id: 'unc-charlotte',
@@ -121,7 +129,7 @@
 			end: new Date('2020-01-01'),
 			location: 'Charlotte, NC',
 			points: [],
-			tags: []
+			tags: ['Teaching', 'JavaScript', 'Python', 'D3', 'Data Analytics']
 		},
 		{
 			id: 'visual-impressions',
@@ -131,7 +139,7 @@
 			end: new Date('2018-05-01'),
 			location: 'Charlotte, NC',
 			points: [],
-			tags: []
+			tags: ['HTML', 'CSS', 'JavaScript', 'Python', 'Customer Support']
 		},
 		{
 			id: 'hyde-park-intern',
@@ -141,7 +149,7 @@
 			end: new Date('2015-11-01'),
 			location: 'Charlotte, NC',
 			points: [],
-			tags: []
+			tags: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Python']
 		}
 	]
 
@@ -195,86 +203,40 @@
 <svelte:window bind:scrollY />
 
 <!-- Hero Section with Terminal Aesthetic -->
-<section
-	class="hero relative overflow-hidden min-h-screen flex items-center justify-center"
-	style="background: linear-gradient(135deg, #050812 0%, #0a0e27 50%, #050812 100%);"
-	role="banner"
-	onmousemove={handleMouseMove}
->
+<section class="hero" role="banner" onmousemove={handleMouseMove}>
 	<!-- Terminal border effect -->
-	<div class="absolute inset-0 pointer-events-none">
-		<div
-			class="absolute inset-0 border-2 rounded-lg opacity-50"
-			style="border-color: var(--terminal-green); box-shadow: inset 0 0 20px rgba(0, 255, 0, 0.1), 0 0 30px rgba(0, 255, 0, 0.1);"
-		></div>
+	<div class="terminal-border-wrapper">
+		<div class="terminal-border"></div>
 	</div>
 
-	<div class="relative z-10 text-center px-4 w-full max-w-2xl">
+	<div class="hero-content">
 		<!-- Terminal output -->
-		<div
-			class="mb-12 text-left border rounded-lg p-6"
-			style="border-color: var(--terminal-green); background: rgba(10, 14, 39, 0.8);"
-		>
+		<div class="terminal-output">
 			{#each terminalLines as line, i (i)}
-				<div
-					in:fade={{ duration: 400 }}
-					class="mb-2 font-mono text-sm md:text-lg"
-					style="color: var(--terminal-green);"
-				>
+				<div class="terminal-line" in:fade={{ duration: 400 }}>
 					{line}
 				</div>
 			{/each}
 			{#if terminalLines.length > 0}
-				<div class="animate-pulse mt-2 font-mono text-sm" style="color: var(--terminal-green);">
-					$
-				</div>
+				<div class="terminal-cursor">$</div>
 			{/if}
 		</div>
 
 		<div in:fade={{ duration: 800, delay: 800 }}>
-			<div class="flex justify-center gap-6 mb-12 flex-wrap">
-				{#each links as link (link.label)}
-					<a
-						in:fade={{ duration: 800, delay: 300 }}
-						href={link.href}
-						class="group relative px-6 py-3 font-mono font-bold transition-all duration-300 text-sm md:text-base hover:scale-105 active:scale-95"
-						style="color: var(--terminal-green); border: 2px solid var(--terminal-green); background: rgba(10, 14, 39, 0.6); text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);"
-					>
-						<span class="group-hover:text-yellow-400 transition-colors">λ</span>
-						{link.cmd}
-					</a>
-				{/each}
-			</div>
+			<Header {links} />
 		</div>
 
-		<div
-			in:fly={{ y: 40, duration: 800, delay: 400 }}
-			class="text-xs md:text-sm font-mono animate-bounce mt-8"
-			style="color: var(--terminal-green);"
-		>
+		<div class="scroll-hint" in:fly={{ y: 40, duration: 800, delay: 400 }}>
 			▼ scroll to see more ▼
 		</div>
 	</div>
 </section>
 
 <!-- Summary Section -->
-<section
-	class="relative py-20 px-4"
-	style="background: linear-gradient(135deg, rgba(10, 14, 39, 0.9) 0%, rgba(13, 17, 23, 0.9) 100%); border-top: 2px solid var(--terminal-green); border-bottom: 2px solid var(--terminal-green);"
->
-	<div class="max-w-3xl mx-auto">
-		<h2
-			class="text-3xl md:text-4xl font-bold mb-8 font-mono"
-			style="color: var(--terminal-green);"
-			in:fade={{ duration: 600 }}
-		>
-			./ about
-		</h2>
-		<p
-			class="text-base md:text-lg leading-relaxed font-mono"
-			style="color: var(--terminal-green); opacity: 0.9;"
-			in:fade={{ duration: 600, delay: 200 }}
-		>
+<section class="about-section">
+	<div class="content-container">
+		<h2 class="section-title" in:fade={{ duration: 600 }}>./ about</h2>
+		<p class="section-text" in:fade={{ duration: 600, delay: 200 }}>
 			Experienced Front-End leaning Full-Stack Developer delivering scalable web applications using
 			React, JavaScript, TypeScript, HTML/CSS, and Svelte. Strong background in building responsive
 			interfaces, integrating RESTful APIs, and contributing to agile teams. Experienced in
@@ -284,37 +246,18 @@
 </section>
 
 <!-- Skills Section -->
-<section
-	class="py-20 px-4"
-	style="background: linear-gradient(135deg, rgba(5, 8, 18, 0.95) 0%, rgba(10, 14, 39, 0.95) 100%);"
->
-	<div class="max-w-4xl mx-auto">
-		<h2
-			class="text-3xl md:text-4xl font-bold mb-12 font-mono"
-			style="color: var(--terminal-green);"
-		>
-			./ skills
-		</h2>
-		<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<section class="skills-section">
+	<div class="content-container">
+		<h2 class="section-title">./ skills</h2>
+		<div class="skills-grid">
 			{#each Object.entries(skills) as [category, items], i (category)}
-				<div
-					class="group p-6 rounded-lg border transition-all duration-300 hover:shadow-lg"
-					style="border-color: var(--terminal-green); background: rgba(10, 14, 39, 0.7); box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);"
-					in:fade={{ duration: 600, delay: i * 100 }}
-				>
-					<h3
-						class="text-lg md:text-xl font-semibold mb-4 font-mono transition-colors group-hover:drop-shadow-lg"
-						style="color: var(--terminal-green);"
-					>
+				<div class="skill-category" in:fade={{ duration: 600, delay: i * 100 }}>
+					<h3 class="skill-category-title">
 						→ {category}
 					</h3>
-					<div class="flex flex-wrap gap-2">
+					<div class="skills-tags">
 						{#each items as skill, j (skill)}
-							<span
-								class="px-3 py-1 text-xs md:text-sm font-mono rounded-sm border transition-all duration-200 hover:scale-105 hover:drop-shadow-lg"
-								style="color: var(--terminal-green); border-color: var(--terminal-green); background: rgba(10, 14, 39, 0.5);"
-								in:fade={{ duration: 400, delay: i * 100 + j * 30 }}
-							>
+							<span class="skill-tag" in:fade={{ duration: 400, delay: i * 100 + j * 30 }}>
 								[{skill}]
 							</span>
 						{/each}
@@ -326,69 +269,43 @@
 </section>
 
 <!-- Experience Section -->
-<section
-	class="py-20 px-4"
-	style="background: linear-gradient(135deg, rgba(10, 14, 39, 0.9) 0%, rgba(13, 17, 23, 0.9) 100%);"
->
-	<div class="max-w-3xl mx-auto">
-		<h2
-			class="text-3xl md:text-4xl font-bold mb-12 font-mono"
-			style="color: var(--terminal-green);"
-		>
-			./ work_history
-		</h2>
-		<div class="space-y-4">
-			{#each experiences as role, i (role.id)}
+<section class="experience-section">
+	<div class="content-container">
+		<h2 class="section-title">./ work_history</h2>
+		<div class="experience-list">
+			{#each experience as role, i (role.id)}
 				<button
+					class="experience-item"
 					onclick={() => toggleRole(role.id)}
-					class="w-full group text-left"
 					in:fade={{ duration: 600, delay: i * 50 }}
 				>
-					<div
-						style={expandedRole === role.id
-							? `border-color: var(--terminal-green); background: rgba(0, 255, 0, 0.05); box-shadow: 0 0 20px rgba(0, 255, 0, 0.15);`
-							: `border-color: var(--terminal-green); background: rgba(10, 14, 39, 0.6); opacity: 0.8;`}
-						class="p-6 rounded-lg border transition-all duration-300 cursor-pointer"
-					>
-						<div class="flex justify-between items-start">
-							<div>
-								<h3
-									class="text-lg md:text-xl font-semibold font-mono transition-all group-hover:drop-shadow-lg"
-									style="color: var(--terminal-green);"
-								>
-									{role.title} @ {role.company}
-								</h3>
-								<p class="text-sm font-mono mt-1 opacity-70" style="color: var(--terminal-green);">
-									<span
-										class="inline-block px-2 py-0.5 rounded-sm opacity-80"
-										style="background: rgba(0, 255, 0, 0.1); border: 1px solid rgba(0, 255, 0, 0.3);"
-									>
-										{role.start.getFullYear()}.{String(role.start.getMonth() + 1).padStart(2, '0')}
-										→ {role.end.getFullYear()}.{String(role.end.getMonth() + 1).padStart(2, '0')}
-									</span>
-								</p>
+					<div class="experience-header" class:expanded={expandedRole === role.id}>
+						<div>
+							<h3 class="experience-title">
+								{role.title} @ {role.company}
+							</h3>
+							<div class="experience-tags">
+								{#each role.tags as tag}
+									<span class="tag">[{tag}]</span>
+								{/each}
 							</div>
-							<span
-								class="text-lg transition-transform duration-300"
-								class:rotate-180={expandedRole === role.id}
-								style="color: var(--terminal-green);"
-							>
-								▼
-							</span>
 						</div>
 
-						{#if expandedRole === role.id}
-							<ul
-								class="ml-6 mt-4 space-y-2 font-mono text-sm"
-								in:fly={{ y: -10, duration: 300 }}
-								style="color: var(--terminal-green);"
-							>
-								{#each role.points as point (point)}
-									<li>→ {point}</li>
-								{/each}
-							</ul>
-						{/if}
+						<span class="experience-date">
+							{role.start.getFullYear()}.{String(role.start.getMonth() + 1).padStart(2, '0')}
+							→ {role.end.getFullYear()}.{String(role.end.getMonth() + 1).padStart(2, '0')}
+						</span>
+
+						<span class="expand-icon" class:rotated={expandedRole === role.id}> ▼ </span>
 					</div>
+
+					{#if expandedRole === role.id}
+						<ul class="experience-details" in:fly={{ y: -10, duration: 300 }}>
+							{#each role.points as point (point)}
+								<li>→ {point}</li>
+							{/each}
+						</ul>
+					{/if}
 				</button>
 			{/each}
 		</div>
@@ -396,6 +313,11 @@
 </section>
 
 <style>
+	:global(html) {
+		scroll-behavior: smooth;
+		scroll-snap-type: y mandatory;
+	}
+
 	:global(body) {
 		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
 	}
@@ -406,5 +328,350 @@
 
 	:global(button:hover) {
 		filter: drop-shadow(0 0 8px rgba(0, 255, 0, 0.3));
+	}
+
+	/* Section Styling */
+	.hero,
+	.about-section,
+	.skills-section,
+	.experience-section {
+		scroll-snap-align: start;
+		scroll-snap-stop: always;
+	}
+
+	.hero {
+		position: relative;
+		overflow: hidden;
+		min-height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: linear-gradient(135deg, #050812 0%, #0a0e27 50%, #050812 100%);
+	}
+
+	.about-section {
+		position: relative;
+		padding: 5rem 1rem;
+		background: linear-gradient(135deg, rgba(10, 14, 39, 0.9) 0%, rgba(13, 17, 23, 0.9) 100%);
+		border-top: 2px solid var(--terminal-green);
+		border-bottom: 2px solid var(--terminal-green);
+	}
+
+	.skills-section {
+		padding: 5rem 1rem;
+		background: linear-gradient(135deg, rgba(5, 8, 18, 0.95) 0%, rgba(10, 14, 39, 0.95) 100%);
+	}
+
+	.experience-section {
+		padding: 5rem 1rem;
+		background: linear-gradient(135deg, rgba(10, 14, 39, 0.9) 0%, rgba(13, 17, 23, 0.9) 100%);
+	}
+
+	/* Content Container */
+	.content-container {
+		width: 100%;
+		max-width: 48rem;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	/* Hero Content */
+	.hero-content {
+		position: relative;
+		z-index: 10;
+		text-align: center;
+		padding: 1rem;
+		width: 100%;
+		max-width: 32rem;
+	}
+
+	.terminal-border-wrapper {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+
+	.terminal-border {
+		position: absolute;
+		inset: 0;
+		border: 2px solid var(--terminal-green);
+		border-radius: 0.5rem;
+		opacity: 0.5;
+		box-shadow:
+			inset 0 0 20px rgba(0, 255, 0, 0.1),
+			0 0 30px rgba(0, 255, 0, 0.1);
+	}
+
+	.terminal-output {
+		margin-bottom: 3rem;
+		text-align: left;
+		border: 1px solid var(--terminal-green);
+		border-radius: 0.5rem;
+		padding: 1.5rem;
+		background: rgba(10, 14, 39, 0.8);
+	}
+
+	.terminal-line {
+		margin-bottom: 0.5rem;
+		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
+		font-size: 0.875rem;
+		color: var(--terminal-green);
+	}
+
+	@media (min-width: 768px) {
+		.terminal-line {
+			font-size: 1.125rem;
+		}
+	}
+
+	.terminal-cursor {
+		animation: pulse 1s infinite;
+		margin-top: 0.5rem;
+		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
+		font-size: 0.875rem;
+		color: var(--terminal-green);
+	}
+
+	@keyframes pulse {
+		0%,
+		100% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0.5;
+		}
+	}
+
+	/* Scroll Hint */
+	.scroll-hint {
+		font-size: 0.75rem;
+		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
+		color: var(--terminal-green);
+		text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+		animation: bounce 1s infinite;
+		margin-top: 2rem;
+	}
+
+	@media (min-width: 768px) {
+		.scroll-hint {
+			font-size: 0.875rem;
+		}
+	}
+
+	/* Section Titles */
+	.section-title {
+		font-size: 1.875rem;
+		font-weight: bold;
+		margin-bottom: 2rem;
+		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
+		color: var(--terminal-green);
+	}
+
+	@media (min-width: 768px) {
+		.section-title {
+			font-size: 2.25rem;
+		}
+	}
+
+	.section-text {
+		font-size: 1rem;
+		line-height: 1.625;
+		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
+		color: var(--terminal-green);
+		opacity: 0.9;
+	}
+
+	@media (min-width: 768px) {
+		.section-text {
+			font-size: 1.125rem;
+		}
+	}
+
+	/* Skills Section */
+	.skills-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2rem;
+	}
+
+	@media (min-width: 768px) {
+		.skills-grid {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+
+	.skill-category {
+		padding: 1.5rem;
+		border: 1px solid var(--terminal-green);
+		border-radius: 0.5rem;
+		background: rgba(10, 14, 39, 0.7);
+		box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
+		transition: all 0.3s ease;
+	}
+
+	.skill-category:hover {
+		box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+	}
+
+	.skill-category-title {
+		font-size: 1rem;
+		font-weight: 600;
+		margin-bottom: 1rem;
+		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
+		color: var(--terminal-green);
+		transition: all 0.2s ease;
+	}
+
+	@media (min-width: 768px) {
+		.skill-category-title {
+			font-size: 1.125rem;
+		}
+	}
+
+	.skill-category:hover .skill-category-title {
+		filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.5));
+	}
+
+	.skills-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.skill-tag {
+		display: inline-block;
+		padding: 0.25rem 0.75rem;
+		font-size: 0.75rem;
+		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
+		border: 1px solid var(--terminal-green);
+		border-radius: 0.25rem;
+		color: var(--terminal-green);
+		background: rgba(10, 14, 39, 0.5);
+		transition: all 0.2s ease;
+	}
+
+	@media (min-width: 768px) {
+		.skill-tag {
+			font-size: 0.875rem;
+		}
+	}
+
+	.skill-tag:hover {
+		transform: scale(1.05);
+		filter: drop-shadow(0 0 8px rgba(0, 255, 0, 0.5));
+	}
+
+	/* Experience Section */
+	.experience-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.experience-item {
+		width: 100%;
+		text-align: left;
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+	}
+
+	.experience-header {
+		position: relative;
+		padding: 1.5rem;
+		border: 1px solid var(--terminal-green);
+		border-radius: 0.5rem;
+		background: rgba(10, 14, 39, 0.6);
+		opacity: 0.8;
+		transition: all 0.3s ease;
+	}
+
+	.experience-header.expanded {
+		border-color: var(--terminal-green);
+		background: rgba(0, 255, 0, 0.05);
+		opacity: 1;
+		box-shadow: 0 0 20px rgba(0, 255, 0, 0.15);
+	}
+
+	.experience-title {
+		font-size: 1rem;
+		font-weight: 600;
+		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
+		color: var(--terminal-green);
+		transition: all 0.2s ease;
+	}
+
+	@media (min-width: 768px) {
+		.experience-title {
+			font-size: 1.125rem;
+		}
+	}
+
+	.experience-header:hover .experience-title {
+		filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.5));
+	}
+
+	.experience-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 0.75rem;
+	}
+
+	.tag {
+		display: inline-block;
+		padding: 0.125rem 0.5rem;
+		font-size: 0.75rem;
+		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
+		border: 1px solid var(--terminal-green);
+		border-radius: 0.25rem;
+		color: var(--terminal-green);
+		background: rgba(0, 255, 0, 0.05);
+	}
+
+	.experience-date {
+		position: absolute;
+		top: 1.5rem;
+		right: 1.5rem;
+		padding: 0.125rem 0.5rem;
+		font-size: 0.875rem;
+		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
+		background: rgba(0, 255, 0, 0.1);
+		border: 1px solid rgba(0, 255, 0, 0.3);
+		border-radius: 0.25rem;
+		color: var(--terminal-green);
+		opacity: 0.8;
+	}
+
+	.expand-icon {
+		position: absolute;
+		bottom: 1.5rem;
+		right: 1.5rem;
+		font-size: 1.125rem;
+		color: var(--terminal-green);
+		transition: transform 0.3s ease;
+	}
+
+	.expand-icon.rotated {
+		transform: rotateZ(180deg);
+	}
+
+	.experience-details {
+		margin-left: 1.5rem;
+		margin-top: 1rem;
+		padding-top: 1rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
+		font-size: 0.875rem;
+		color: var(--terminal-green);
+		list-style: none;
+	}
+
+	.experience-details li {
+		padding: 0;
+		margin: 0;
 	}
 </style>

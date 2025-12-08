@@ -1,13 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=JetBrains+Mono:wght@400;600;700&display=swap');
 
-@import 'tailwindcss';
-
 :root {
 	--terminal-green: #00ff00;
 	--terminal-green-dim: #00cc00;
 	--terminal-dark: #0a0e27;
 	--terminal-darker: #050812;
 	--terminal-scanline: rgba(0, 255, 0, 0.03);
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
@@ -77,6 +81,17 @@ body::before {
 		text-shadow:
 			0 0 15px rgba(0, 255, 0, 0.5),
 			0 0 30px rgba(0, 255, 0, 0.2);
+	}
+}
+
+/* Bounce animation */
+@keyframes bounce {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-10px);
 	}
 }
 
