@@ -2,7 +2,7 @@
 
 :root {
 	--terminal-green: #00ff00;
-	--terminal-green-dim: #00cc00;
+	--terminal-green-dim: #28ff28;
 	--terminal-dark: #0a0e27;
 	--terminal-darker: #050812;
 	--terminal-scanline: rgba(0, 255, 0, 0.03);
@@ -12,6 +12,11 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+	scroll-snap-type: y mandatory;
 }
 
 body {
@@ -95,7 +100,18 @@ body::before {
 	}
 }
 
-/* Terminal text glow */
 .terminal-text {
 	animation: glow 3s ease-in-out infinite;
+}
+
+.snap-section {
+	scroll-snap-align: start;
+	scroll-snap-stop: always;
+}
+
+.content-container {
+	width: 100%;
+	max-width: 48rem;
+	margin-left: auto;
+	margin-right: auto;
 }

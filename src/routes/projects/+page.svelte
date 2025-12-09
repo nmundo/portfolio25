@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition'
-	import Header from '$lib/Header.svelte'
 
 	interface Project {
 		id: string
@@ -247,8 +246,7 @@
 		gap: 0;
 		padding: 0;
 		margin: 0;
-		max-width: 60rem;
-		margin: 0 auto;
+		max-width: 100%;
 	}
 
 	.project-card-container {
@@ -258,30 +256,29 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		padding: 1rem;
 	}
 
 	.project-card {
 		background: rgba(10, 14, 39, 0.6);
 		color: var(--terminal-green);
-		padding: 2rem 1rem;
+		padding: 1rem;
 		border-radius: 0.5rem;
 		box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
 		flex-shrink: 0;
-		width: 100%;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		width: 100%;
+		max-width: 50rem;
 	}
 
 	.project-layout {
 		display: grid;
 		grid-template-columns: 1fr;
-		gap: 2rem;
+		gap: 1.5rem;
 		margin-top: 1rem;
 		width: 100%;
-		max-width: 50rem;
-		margin-left: auto;
-		margin-right: auto;
 	}
 
 	.tech-tags-container {
@@ -303,23 +300,23 @@
 	}
 
 	.project-title {
-		font-size: 1.5rem;
+		font-size: 1.25rem;
 		font-weight: bold;
 		margin-bottom: 0.5rem;
 	}
 
 	.project-id {
-		font-size: 0.75rem;
-		margin-bottom: 1.5rem;
+		font-size: 0.625rem;
+		margin-bottom: 1rem;
 	}
 
 	.section-label {
-		font-size: 0.875rem;
+		font-size: 0.8125rem;
 		margin-bottom: 0.5rem;
 	}
 
 	.project-description {
-		font-size: 0.875rem;
+		font-size: 0.8125rem;
 		opacity: 0.9;
 		line-height: 1.5;
 	}
@@ -341,6 +338,8 @@
 	.screenshot-button {
 		padding: 0.5rem 1rem;
 		flex: 1;
+		min-width: 0;
+		font-size: 0.75rem;
 	}
 
 	.project-link {
@@ -348,6 +347,8 @@
 		flex: 1;
 		text-align: center;
 		background: rgba(10, 14, 39, 0.8);
+		font-size: 0.75rem;
+		min-width: 0;
 	}
 
 	/* Images & Media */
@@ -378,6 +379,32 @@
 		background: rgba(0, 255, 0, 0.05);
 	}
 
+	@media (min-width: 768px) {
+		.project-card-container {
+			padding: 1.5rem;
+		}
+
+		.project-card {
+			padding: 1.5rem;
+		}
+
+		.project-title {
+			font-size: 1.5rem;
+		}
+
+		.project-description {
+			font-size: 0.875rem;
+		}
+
+		.section-label {
+			font-size: 0.875rem;
+		}
+
+		.project-layout {
+			gap: 2rem;
+		}
+	}
+
 	@media (min-width: 1024px) {
 		.hero-title {
 			font-size: 4.5rem;
@@ -393,6 +420,10 @@
 
 		.project-title {
 			font-size: 1.875rem;
+		}
+
+		.project-card {
+			padding: 2rem 1rem;
 		}
 
 		.project-layout {

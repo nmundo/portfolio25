@@ -16,32 +16,4 @@
 </div>
 
 <style>
-	:global(html) {
-		scroll-behavior: smooth;
-		scroll-snap-type: y mandatory;
-	}
-
-	:global(body) {
-		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
-	}
-
-	:global(a:hover) {
-		filter: drop-shadow(0 0 8px rgba(0, 255, 0, 0.5));
-	}
-
-	:global(button:hover) {
-		filter: drop-shadow(0 0 8px rgba(0, 255, 0, 0.3));
-	}
-
-	:global(.snap-section) {
-		scroll-snap-align: start;
-		scroll-snap-stop: always;
-	}
-
-	:global(.content-container) {
-		width: 100%;
-		max-width: 48rem;
-		margin-left: auto;
-		margin-right: auto;
-	}
 </style>

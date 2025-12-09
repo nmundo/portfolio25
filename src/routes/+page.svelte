@@ -8,31 +8,15 @@
 	let mousePos = $state({ x: 0, y: 0 })
 	let scrollY = $state(0)
 	let terminalLines = $state<string[]>([])
+	let typedFirst = $state('')
 
 	// Spring for smooth scroll effects
 	const parallaxY = new Spring(0, { stiffness: 0.08, damping: 0.25 })
 
-	const terminalGreeting = ['$ ./portfolio', 'Nathan', 'Full Stack Engineer']
-
-	const links = [
-		{ href: 'https://linkedin.com/in/nmundo', label: 'LinkedIn', cmd: '[ linkedin ]' },
-		{ href: 'https://github.com/nmundo', label: 'GitHub', cmd: '[ github ]' }
-	]
+	const terminalCommand = '> cat ./about.txt'
+	const terminalGreeting = ['Nathan', 'Full Stack Engineer']
 
 	const experience = [
-		// {
-		// 	id: 'ai-freelance',
-		// 	title: 'AI Training - Freelance',
-		// 	company: 'Freelance',
-		// 	start: new Date('2025-01-01'),
-		// 	end: new Date('2025-12-01'),
-		// 	location: 'Remote',
-		// 	points: [
-		// 		'Contributed to projects training LLMs to generate production-ready code using RLHF.',
-		// 		'Worked on various projects focused on UI using JavaScript, Tailwind, and React.'
-		// 	],
-		// 	tags: ['React', 'Tailwind', 'JavaScript', 'Technical Writing']
-		// },
 		{
 			id: 'stiegler',
 			title: 'Senior Lecturer',
@@ -154,17 +138,10 @@
 	]
 
 	const skills = {
-		'Front-End': ['React', 'JavaScript', 'TypeScript', 'HTML', 'CSS', 'Tailwind', 'Svelte'],
-		'Back-End': [
-			'Node.js',
-			'Express',
-			'Java Spring Boot',
-			'Python (Flask/Django)',
-			'SQL',
-			'PL/SQL'
-		],
-		'Cloud & DevOps': ['AWS', 'CI/CD', 'GitHub Actions', 'Jenkins'],
-		'Tools & Methodologies': ['Agile', 'Webpack', 'Git/GitHub', 'TDD', 'RESTful APIs']
+		'Front-End': ['React', 'JavaScript', 'TypeScript', 'HTML', 'CSS', 'Svelte'],
+		'Back-End': ['Node', 'Express', 'Java', 'Python', 'SQL', 'PL/SQL']
+		// 'Cloud & DevOps': ['AWS', 'CI/CD', 'GitHub Actions', 'Jenkins'],
+		// 'Tools & Methodologies': ['Agile', 'Webpack', 'Git/GitHub', 'TDD', 'RESTful APIs']
 	}
 
 	function toggleRole(roleId: string) {
@@ -186,15 +163,33 @@
 
 	$effect(() => {
 		if (typeof window !== 'undefined') {
-			let currentIndex = 0
+			let doneTyping = false
+			let charIndex = 0
+			let lineIndex = 0
+
 			const timer = setInterval(() => {
-				if (currentIndex < terminalGreeting.length) {
-					terminalLines = [...terminalGreeting.slice(0, currentIndex + 1)]
-					currentIndex++
+				// First line typing animation
+				if (!doneTyping) {
+					const full = terminalCommand
+					if (charIndex < full.length) {
+						typedFirst = full.slice(0, charIndex + 1)
+						charIndex++
+						return
+					} else {
+						doneTyping = true
+						return
+					}
+				}
+
+				// Add the remaining lines normally
+				if (lineIndex < terminalGreeting.length) {
+					terminalLines = [...terminalLines, terminalGreeting[lineIndex]]
+					lineIndex++
 				} else {
 					clearInterval(timer)
 				}
-			}, 300)
+			}, 80)
+
 			return () => clearInterval(timer)
 		}
 	})
@@ -202,28 +197,20 @@
 
 <svelte:window bind:scrollY />
 
-<!-- Hero Section with Terminal Aesthetic -->
 <section class="hero" role="banner" onmousemove={handleMouseMove}>
-	<!-- Terminal border effect -->
-	<div class="terminal-border-wrapper">
-		<div class="terminal-border"></div>
-	</div>
-
 	<div class="hero-content">
-		<!-- Terminal output -->
 		<div class="terminal-output">
+			<div class="terminal-line">{typedFirst}</div>
 			{#each terminalLines as line, i (i)}
-				<div class="terminal-line" in:fade={{ duration: 400 }}>
+				<div class="terminal-line" in:fade={{ duration: 100, delay: i * 50 }}>
 					{line}
 				</div>
 			{/each}
-			{#if terminalLines.length > 0}
-				<div class="terminal-cursor">$</div>
+			{#if terminalLines.length === terminalGreeting.length}
+				<div class="terminal-cursor" in:fade={{ duration: 50, delay: terminalLines.length * 50 }}>
+					<span>&nbsp;_</span>
+				</div>
 			{/if}
-		</div>
-
-		<div in:fade={{ duration: 800, delay: 800 }}>
-			<Header {links} />
 		</div>
 
 		<div class="scroll-hint" in:fly={{ y: 40, duration: 800, delay: 400 }}>
@@ -235,7 +222,7 @@
 <!-- Summary Section -->
 <section class="about-section">
 	<div class="content-container">
-		<h2 class="section-title" in:fade={{ duration: 600 }}>./ about</h2>
+		<h2 class="section-title" in:fade={{ duration: 600 }}>./about</h2>
 		<p class="section-text" in:fade={{ duration: 600, delay: 200 }}>
 			Experienced Front-End leaning Full-Stack Developer delivering scalable web applications using
 			React, JavaScript, TypeScript, HTML/CSS, and Svelte. Strong background in building responsive
@@ -248,7 +235,7 @@
 <!-- Skills Section -->
 <section class="skills-section">
 	<div class="content-container">
-		<h2 class="section-title">./ skills</h2>
+		<h2 class="section-title">./skills</h2>
 		<div class="skills-grid">
 			{#each Object.entries(skills) as [category, items], i (category)}
 				<div class="skill-category" in:fade={{ duration: 600, delay: i * 100 }}>
@@ -268,18 +255,18 @@
 	</div>
 </section>
 
-<!-- Experience Section -->
 <section class="experience-section">
 	<div class="content-container">
-		<h2 class="section-title">./ work_history</h2>
+		<h2 class="section-title">./experience</h2>
 		<div class="experience-list">
 			{#each experience as role, i (role.id)}
 				<button
 					class="experience-item"
+					class:expanded={expandedRole === role.id}
 					onclick={() => toggleRole(role.id)}
 					in:fade={{ duration: 600, delay: i * 50 }}
 				>
-					<div class="experience-header" class:expanded={expandedRole === role.id}>
+					<div class="experience-header">
 						<div>
 							<h3 class="experience-title">
 								{role.title} @ {role.company}
@@ -313,21 +300,8 @@
 </section>
 
 <style>
-	:global(html) {
-		scroll-behavior: smooth;
-		scroll-snap-type: y mandatory;
-	}
-
 	:global(body) {
 		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
-	}
-
-	:global(a:hover) {
-		filter: drop-shadow(0 0 8px rgba(0, 255, 0, 0.5));
-	}
-
-	:global(button:hover) {
-		filter: drop-shadow(0 0 8px rgba(0, 255, 0, 0.3));
 	}
 
 	/* Section Styling */
@@ -408,6 +382,7 @@
 		border: 1px solid var(--terminal-green);
 		border-radius: 0.5rem;
 		padding: 1.5rem;
+		height: 165px;
 		background: rgba(10, 14, 39, 0.8);
 	}
 
@@ -425,11 +400,16 @@
 	}
 
 	.terminal-cursor {
-		animation: pulse 1s infinite;
 		margin-top: 0.5rem;
 		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
 		font-size: 0.875rem;
 		color: var(--terminal-green);
+		&::before {
+			content: '>';
+		}
+		span {
+			animation: pulse 1s infinite;
+		}
 	}
 
 	@keyframes pulse {
@@ -448,7 +428,7 @@
 		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
 		color: var(--terminal-green);
 		text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-		animation: bounce 1s infinite;
+		animation: bounce 2s infinite;
 		margin-top: 2rem;
 	}
 
@@ -572,26 +552,24 @@
 		width: 100%;
 		text-align: left;
 		background: none;
-		border: none;
+		border: 1px solid var(--terminal-green);
 		padding: 0;
 		cursor: pointer;
+		border-radius: 0.5rem;
+		background: rgba(10, 14, 39, 0.6);
+		opacity: 0.8;
+		transition: all 0.3s ease;
+		&.expanded {
+			border-color: var(--terminal-green);
+			background: rgba(0, 255, 0, 0.05);
+			opacity: 1;
+			box-shadow: 0 0 20px rgba(0, 255, 0, 0.15);
+		}
 	}
 
 	.experience-header {
 		position: relative;
 		padding: 1.5rem;
-		border: 1px solid var(--terminal-green);
-		border-radius: 0.5rem;
-		background: rgba(10, 14, 39, 0.6);
-		opacity: 0.8;
-		transition: all 0.3s ease;
-	}
-
-	.experience-header.expanded {
-		border-color: var(--terminal-green);
-		background: rgba(0, 255, 0, 0.05);
-		opacity: 1;
-		box-shadow: 0 0 20px rgba(0, 255, 0, 0.15);
 	}
 
 	.experience-title {
@@ -659,8 +637,8 @@
 
 	.experience-details {
 		margin-left: 1.5rem;
-		margin-top: 1rem;
-		padding-top: 1rem;
+		margin-top: 0.5rem;
+		padding-bottom: 1.5rem;
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
