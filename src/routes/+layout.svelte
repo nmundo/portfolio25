@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition'
+	import '../app.css'
 	import favicon from '$lib/assets/favicon.svg'
 	import Header from '$lib/Header.svelte'
 

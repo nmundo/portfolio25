@@ -300,10 +300,6 @@
 </section>
 
 <style>
-	:global(body) {
-		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
-	}
-
 	/* Section Styling */
 	.hero,
 	.about-section,

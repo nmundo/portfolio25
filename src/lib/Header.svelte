@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition'
 	import { page } from '$app/state'
+	import { resolve } from '$app/paths'
 
 	interface NavLink {
 		href: string
@@ -17,9 +18,9 @@
 <div in:fade={{ duration: 800, delay: 800 }}>
 	<div class="nav">
 		{#if page.url.pathname === '/'}
-			<a href="/projects" class="button projects-nav"> [ projects ] </a>
+			<a href={resolve('/projects')} class="button projects-nav"> [ projects ] </a>
 		{:else}
-			<a href="/" class="nav-button"> [ home ] </a>
+			<a href={resolve('/')} class="nav-button"> [ home ] </a>
 		{/if}
 	</div>
 	<div class="nav social">
