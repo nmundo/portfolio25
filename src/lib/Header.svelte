@@ -17,10 +17,10 @@
 
 <div in:fade={{ duration: 800, delay: 800 }}>
 	<div class="nav">
-		{#if page.url.pathname === '/'}
-			<a href={resolve('/projects')} class="button projects-nav"> [ projects ] </a>
+		{#if page.url.pathname === resolve('/')}
+			<a href={resolve('/projects')} class="button"> [ projects ] </a>
 		{:else}
-			<a href={resolve('/')} class="nav-button"> [ home ] </a>
+			<a href={resolve('/')} class="button"> [ home ] </a>
 		{/if}
 	</div>
 	<div class="nav social">
