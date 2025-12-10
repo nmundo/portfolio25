@@ -133,7 +133,8 @@
 			<div class="header">
 				<div>
 					<h3 class="title">
-						{role.title} @ {role.company}
+						<span class="job-title">{role.title}</span>
+						<span class="company-name">@ {role.company}</span>
 					</h3>
 					<div class="tags">
 						{#each role.tags as tag}
@@ -182,6 +183,9 @@
 		&:hover {
 			opacity: 1;
 			box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+			.title {
+				filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.5));
+			}
 		}
 		&.expanded {
 			opacity: 1;
@@ -198,16 +202,12 @@
 		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
 		color: var(--terminal-green);
 		transition: all 0.2s ease;
-	}
-
-	@media (min-width: 768px) {
-		.title {
-			font-size: 1.125rem;
+		span {
+			display: inline;
+			@media (max-width: 767px) {
+				display: block;
+			}
 		}
-	}
-
-	.header:hover .title {
-		filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.5));
 	}
 
 	.tags {
@@ -215,17 +215,42 @@
 		flex-wrap: wrap;
 		gap: 0.5rem;
 		margin-top: 0.75rem;
-	}
+		align-items: center;
 
-	.tag {
-		display: inline-block;
-		padding: 0.125rem 0.5rem;
-		font-size: 0.75rem;
-		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
-		border: 1px solid var(--terminal-green);
-		border-radius: 0.25rem;
-		color: var(--terminal-green);
-		background: rgba(0, 255, 0, 0.05);
+		.tag {
+			display: inline-flex;
+			align-items: center;
+			padding: 0.125rem 0.5rem;
+			font-size: clamp(0.6rem, 1.2vw, 0.75rem);
+			font-family: 'JetBrains Mono', 'Courier Prime', monospace;
+			border: 1px solid var(--terminal-green);
+			border-radius: 0.25rem;
+			color: var(--terminal-green);
+			background: rgba(0, 255, 0, 0.05);
+
+			flex: 0 1 auto;
+			min-width: 0;
+			max-width: 12rem;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	}
+	@media (max-width: 420px) {
+		.tags {
+			gap: 0.4rem;
+		}
+
+		.tag {
+			padding: 0.08rem 0.4rem;
+			max-width: 9rem;
+		}
+
+		.date {
+			padding: 0.06rem 0.35rem;
+			max-width: 8.5rem;
+			font-size: clamp(0.65rem, 2.2vw, 0.78rem);
+		}
 	}
 
 	.date {
@@ -233,13 +258,20 @@
 		top: 0;
 		right: 0;
 		padding: 0.125rem 0.5rem;
-		font-size: 0.875rem;
+		font-size: clamp(0.7rem, 1vw, 0.875rem);
 		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
 		background: rgba(0, 255, 0, 0.1);
 		border: 1px solid rgba(0, 255, 0, 0.3);
 		border-radius: 0.25rem;
 		color: var(--terminal-green);
 		opacity: 0.8;
+		display: inline-flex;
+		align-items: center;
+		min-width: 0;
+		max-width: 11rem;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	.expand-icon {
