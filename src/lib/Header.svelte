@@ -15,7 +15,7 @@
 	]
 </script>
 
-<div in:fade={{ duration: 800, delay: 800 }}>
+<div id="header" in:fade={{ duration: 800, delay: 800 }}>
 	<div class="nav">
 		{#if page.url.pathname === resolve('/')}
 			<a href={resolve('/projects')} class="button"> [ projects ] </a>
@@ -39,6 +39,15 @@
 </div>
 
 <style>
+	#header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 5rem;
+		background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+		z-index: 10;
+	}
 	.nav {
 		position: fixed;
 		top: 1.5rem;

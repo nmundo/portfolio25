@@ -195,10 +195,9 @@
 		margin-right: auto;
 	}
 
-	/* Hero Content */
 	.hero-content {
 		position: relative;
-		z-index: 10;
+		/* z-index: 10; */
 		text-align: center;
 		padding: 1rem;
 		width: 100%;
