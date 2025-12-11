@@ -100,20 +100,28 @@
 </section>
 
 <!-- Summary Section -->
-<section class="about-section">
+<section class="about">
 	<div class="content-container">
 		<h2 class="section-title" in:fade={{ duration: 600 }}>./about</h2>
+		<p class="section-text" in:fade={{ duration: 600, delay: 100 }}>
+			I build responsive, user-focused web applications using modern front-end technologies. Over
+			the past 7+ years, I've worked across fintech, e-commerce, and manufacturing, migrating legacy
+			systems to React, optimizing UI performance, creating dashboards to visualize company data,
+			and shipping features that actually get used. I'm also not afraid to hop out of the browser
+			and work on solutions that require knowledge outside web technologies; I am full-stack through
+			and through.
+		</p>
 		<p class="section-text" in:fade={{ duration: 600, delay: 200 }}>
-			Experienced Front-End leaning Full-Stack Developer delivering scalable web applications using
-			React, JavaScript, TypeScript, HTML/CSS, and Svelte. Strong background in building responsive
-			interfaces, integrating RESTful APIs, and contributing to agile teams. Experienced in
-			full-stack development with Java Spring Boot and mentoring technical teams.
+			What sets me apart is my ability to explain complex technical concepts clearly. Teaching
+			full-stack development combined with working alongside non-technical decision-makers on
+			architectural and roadmap choices has given me the ability to articulate what needs to be done
+			and why.
 		</p>
 	</div>
 </section>
 
 <!-- Skills Section -->
-<section class="skills-section">
+<section class="skills">
 	<div class="content-container">
 		<h2 class="section-title">./skills</h2>
 		<div class="skills-grid">
@@ -135,7 +143,7 @@
 	</div>
 </section>
 
-<section class="experience-section">
+<section class="experience">
 	<div class="content-container">
 		<h2 class="section-title" in:fade={{ duration: 600 }}>./experience</h2>
 		<Experience />
@@ -145,11 +153,12 @@
 <style>
 	/* Section Styling */
 	.hero,
-	.about-section,
-	.skills-section,
-	.experience-section {
+	.about,
+	.skills,
+	.experience {
 		scroll-snap-align: start;
 		scroll-snap-stop: always;
+		border-bottom: 2px solid var(--terminal-green);
 	}
 
 	.hero {
@@ -162,20 +171,18 @@
 		background: linear-gradient(135deg, #050812 0%, #0a0e27 50%, #050812 100%);
 	}
 
-	.about-section {
+	.about {
 		position: relative;
 		padding: 5rem 1rem;
 		background: linear-gradient(135deg, rgba(10, 14, 39, 0.9) 0%, rgba(13, 17, 23, 0.9) 100%);
-		border-top: 2px solid var(--terminal-green);
-		border-bottom: 2px solid var(--terminal-green);
 	}
 
-	.skills-section {
+	.skills {
 		padding: 5rem 1rem;
 		background: linear-gradient(135deg, rgba(5, 8, 18, 0.95) 0%, rgba(10, 14, 39, 0.95) 100%);
 	}
 
-	.experience-section {
+	.experience {
 		padding: 5rem 1rem;
 		background: linear-gradient(135deg, rgba(10, 14, 39, 0.9) 0%, rgba(13, 17, 23, 0.9) 100%);
 	}
@@ -196,23 +203,6 @@
 		padding: 1rem;
 		width: 100%;
 		max-width: 32rem;
-	}
-
-	.terminal-border-wrapper {
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-	}
-
-	.terminal-border {
-		position: absolute;
-		inset: 0;
-		border: 2px solid var(--terminal-green);
-		border-radius: 0.5rem;
-		opacity: 0.5;
-		box-shadow:
-			inset 0 0 20px rgba(0, 255, 0, 0.1),
-			0 0 30px rgba(0, 255, 0, 0.1);
 	}
 
 	.terminal-output {
@@ -298,6 +288,10 @@
 		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
 		color: var(--terminal-green);
 		opacity: 0.9;
+		padding-bottom: 1rem;
+		&::before {
+			content: '> ';
+		}
 	}
 
 	@media (min-width: 768px) {
