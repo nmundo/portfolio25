@@ -1,1 +1,0 @@
-import{O as e}from"./CcwlAKTA.js";import{s as t,p as r}from"./WdMzpm35.js";e();const o={get error(){return r.error},get status(){return r.status},get url(){return r.url}};t.updated.check;export{o as p};
