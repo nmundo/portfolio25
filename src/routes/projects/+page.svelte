@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition'
+	import { resolve } from '$app/paths'
 
 	interface Project {
 		id: string
@@ -102,7 +103,7 @@
 							<div class="screenshot-container border-terminal">
 								{#key currentScreenshot[project.id]}
 									<enhanced:img
-										src={project.screenshots[currentScreenshot[project.id] ?? 0]}
+										src={resolve(project.screenshots[currentScreenshot[project.id] ?? 0])}
 										alt={`${project.title} screenshot ${(currentScreenshot[project.id] ?? 0) + 1}`}
 										in:fade={{ duration: 400 }}
 									/>
