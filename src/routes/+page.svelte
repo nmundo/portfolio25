@@ -123,7 +123,7 @@
 
 <style>
 	.page-wrapper {
-		scroll-snap-type: y proximity;
+		scroll-snap-type: y mandatory;
 		overflow-y: scroll;
 		height: 100vh;
 	}
@@ -138,7 +138,7 @@
 		min-height: 100vh;
 		border-bottom: 2px solid var(--terminal-green);
 		background: linear-gradient(135deg, #050812 0%, #0a0e27 50%, #050812 100%);
-		padding: 5rem 2rem;
+		padding: 5rem 1rem;
 	}
 
 	.hero {
