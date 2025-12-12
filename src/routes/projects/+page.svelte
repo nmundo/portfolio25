@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fade, fly } from 'svelte/transition'
+	import { fade } from 'svelte/transition'
 
 	interface Project {
 		id: string
@@ -8,53 +8,28 @@
 		technologies: string[]
 		screenshots: string[]
 		github: string
-		liveUrl: string
+		liveUrl?: string
 	}
 
 	let currentScreenshot: { [key: string]: number } = $state({})
 
 	const projects: Project[] = [
 		{
-			id: 'cli-dashboard',
-			title: 'CLI Dashboard',
-			description:
-				'A terminal-based dashboard application for monitoring system metrics and logs in real-time. Built with a focus on accessibility and keyboard navigation.',
-			technologies: ['Node.js', 'TypeScript', 'CLI', 'System Monitoring'],
-			screenshots: [
-				'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=400&fit=crop',
-				'https://images.unsplash.com/photo-1516321318423-f06a6a19c51b?w=600&h=400&fit=crop',
-				'https://images.unsplash.com/photo-1633356122544-f134324ef6e9?w=600&h=400&fit=crop'
-			],
-			github: 'https://github.com/nmundo/cli-dashboard',
-			liveUrl: 'https://cli-dashboard-demo.vercel.app'
+			id: 'cta-tracker',
+			title: 'CTA Tracker',
+			description: `A real-time Chicago Transit Authority train tracking application built with SvelteKit. Features live train position mapping, estimated arrival times with real-time and schedule-based predictions, searchable station database, and a responsive design optimized for quick access to transit information. Integrates CTA's official tracking systems to provide accurate, up-to-date departure and arrival estimates across Chicago's 'L' network.`,
+			technologies: ['SvelteKit', 'TypeScript'],
+			screenshots: ['/img/cta-tracker-1.jpg', '/img/cta-tracker-2.jpg'],
+			github: 'https://github.com/nmundo/cta-tracker',
+			liveUrl: 'https://cta-tracker-pi.vercel.app/cta-tracker/'
 		},
 		{
-			id: 'react-components',
-			title: 'React Component Library',
-			description:
-				'A comprehensive library of reusable React components with TypeScript support, accessibility features, and extensive documentation. Includes buttons, modals, forms, and more.',
-			technologies: ['React', 'TypeScript', 'Storybook', 'CSS'],
-			screenshots: [
-				'https://images.unsplash.com/photo-1633356122544-f134324ef6e9?w=600&h=400&fit=crop',
-				'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=400&fit=crop',
-				'https://images.unsplash.com/photo-1516321318423-f06a6a19c51b?w=600&h=400&fit=crop'
-			],
-			github: 'https://github.com/nmundo/react-components',
-			liveUrl: 'https://react-components-lib.vercel.app'
-		},
-		{
-			id: 'full-stack-crm',
-			title: 'Full Stack CRM',
-			description:
-				'A modern customer relationship management system with real-time data synchronization, advanced filtering, and analytics. Built with React and Spring Boot.',
-			technologies: ['React', 'Node.js', 'PostgreSQL', 'AWS', 'REST APIs'],
-			screenshots: [
-				'https://images.unsplash.com/photo-1516321318423-f06a6a19c51b?w=600&h=400&fit=crop',
-				'https://images.unsplash.com/photo-1633356122544-f134324ef6e9?w=600&h=400&fit=crop',
-				'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=400&fit=crop'
-			],
-			github: 'https://github.com/nmundo/full-stack-crm',
-			liveUrl: 'https://full-stack-crm-demo.vercel.app'
+			id: 'pd-ui',
+			title: 'Playdate UI Library',
+			description: 'A collection of UI components for the Playdate console.',
+			technologies: ['Lua'],
+			screenshots: ['/img/pd-ui-1.png'],
+			github: 'https://github.com/nmundo/pd-ui'
 		}
 	]
 
@@ -88,23 +63,47 @@
 	})
 </script>
 
-<section class="projects-section">
+<section class="projects">
 	<div class="projects-grid">
 		{#each projects as project, i (project.id)}
 			<div in:fade={{ duration: 600, delay: i * 100 }} class="project-card-container">
 				<div class="project-card border-terminal">
-					<h2 class="project-title text-terminal">{project.title}</h2>
-					<p class="project-id text-terminal">[project-id: {project.id}]</p>
+					<div class="project-header">
+						<div class="title-section">
+							<h2 class="project-title text-terminal">{project.title}</h2>
+							<p class="project-id text-terminal">[project-id: {project.id}]</p>
+						</div>
+
+						<div class="links-container">
+							{#if project.liveUrl}
+								<a
+									href={project.liveUrl}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="project-link btn"
+								>
+									[ live ]
+								</a>
+							{/if}
+							<a
+								href={project.github}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="project-link btn"
+							>
+								[ source ]
+							</a>
+						</div>
+					</div>
 
 					<div class="project-layout">
 						<!-- Screenshot Slideshow -->
-						<div class="screenshot-section flex-col gap-md">
+						<div class="screenshots">
 							<div class="screenshot-container border-terminal">
 								{#key currentScreenshot[project.id]}
-									<img
+									<enhanced:img
 										src={project.screenshots[currentScreenshot[project.id] ?? 0]}
 										alt={`${project.title} screenshot ${(currentScreenshot[project.id] ?? 0) + 1}`}
-										class="screenshot-image"
 										in:fade={{ duration: 400 }}
 									/>
 								{/key}
@@ -114,59 +113,31 @@
 								</div>
 							</div>
 
-							<!-- Screenshot Controls -->
-							<div class="controls-container">
-								<button
-									onclick={() => prevScreenshot(project.id)}
-									class="screenshot-button btn-terminal"
-								>
-									← prev
-								</button>
-								<button
-									onclick={() => nextScreenshot(project.id)}
-									class="screenshot-button btn-terminal"
-								>
-									next →
-								</button>
-							</div>
+							{#if project.screenshots.length > 1}
+								<div class="controls-container">
+									<button onclick={() => prevScreenshot(project.id)} class="screenshot-button btn">
+										← prev
+									</button>
+									<button onclick={() => nextScreenshot(project.id)} class="screenshot-button btn">
+										next →
+									</button>
+								</div>
+							{/if}
 						</div>
 
-						<!-- Project Details -->
-						<div class="details-section flex-col gap-lg">
-							<!-- Description -->
-							<div class="detail-block flex-col gap-sm">
-								<h3 class="section-label text-terminal">// description</h3>
-								<p class="project-description text-terminal">{project.description}</p>
+						<div class="details">
+							<div class="detail">
+								<h3 class="label text-terminal">// description</h3>
+								<p class="description text-terminal">{project.description}</p>
 							</div>
 
-							<!-- Technologies -->
-							<div class="detail-block flex-col gap-sm">
-								<h3 class="section-label text-terminal">// technologies</h3>
-								<div class="tech-tags-container">
-									{#each project.technologies as tech}
-										<span class="tech-tag">[{tech}]</span>
+							<div class="detail">
+								<h3 class="label text-terminal">// technologies</h3>
+								<div class="tags">
+									{#each project.technologies as tech (tech)}
+										<span class="tag">{tech}</span>
 									{/each}
 								</div>
-							</div>
-
-							<!-- Links -->
-							<div class="links-container">
-								<a
-									href={project.github}
-									target="_blank"
-									rel="noopener noreferrer"
-									class="project-link btn-terminal"
-								>
-									$ github
-								</a>
-								<a
-									href={project.liveUrl}
-									target="_blank"
-									rel="noopener noreferrer"
-									class="project-link btn-terminal"
-								>
-									$ live
-								</a>
 							</div>
 						</div>
 					</div>
@@ -186,7 +157,7 @@
 		border: 1px solid var(--terminal-green);
 	}
 
-	.btn-terminal {
+	.btn {
 		border: 1px solid var(--terminal-green);
 		color: var(--terminal-green);
 		background: rgba(10, 14, 39, 0.6);
@@ -198,42 +169,24 @@
 		transition: all 0.2s ease;
 		text-decoration: none;
 		display: inline-block;
+		&:hover {
+			background: rgba(0, 255, 0, 0.1);
+			text-shadow: 0 0 10px var(--terminal-green);
+			transform: scale(1.05);
+		}
 	}
 
-	.btn-terminal:hover {
-		background: rgba(0, 255, 0, 0.1);
-		text-shadow: 0 0 10px var(--terminal-green);
-		transform: scale(1.05);
-	}
-
-	.flex-col {
+	.details,
+	.detail {
 		display: flex;
 		flex-direction: column;
-	}
-
-	.gap-sm {
 		gap: 0.5rem;
-	}
-	.gap-md {
-		gap: 1rem;
-	}
-	.gap-lg {
-		gap: 2rem;
-	}
-
-	.pt-md {
-		padding-top: 1rem;
-	}
-
-	/* Global Scroll Snap */
-	:global(html) {
-		scroll-behavior: smooth;
 	}
 
 	/* Layout & Structure */
 
-	.projects-section {
-		padding: 0;
+	.projects {
+		padding: 5rem 0 0 0;
 		background: linear-gradient(135deg, rgba(10, 14, 39, 0.9) 0%, rgba(13, 17, 23, 0.9) 100%);
 		height: 100vh;
 		overflow-y: scroll;
@@ -250,13 +203,12 @@
 	}
 
 	.project-card-container {
-		scroll-snap-align: center;
-		scroll-snap-stop: always;
 		height: 100vh;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		padding: 1rem;
+		scroll-snap-align: center;
 	}
 
 	.project-card {
@@ -271,6 +223,7 @@
 		justify-content: center;
 		width: 100%;
 		max-width: 50rem;
+		position: relative;
 	}
 
 	.project-layout {
@@ -281,7 +234,7 @@
 		width: 100%;
 	}
 
-	.tech-tags-container {
+	.tags {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.5rem;
@@ -296,7 +249,19 @@
 	.links-container {
 		display: flex;
 		gap: 1rem;
-		padding-top: 1rem;
+	}
+
+	.project-header {
+		display: grid;
+		grid-template-columns: 1fr;
+		align-items: start;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.title-section {
+		display: flex;
+		flex-direction: column;
 	}
 
 	.project-title {
@@ -307,18 +272,24 @@
 
 	.project-id {
 		font-size: 0.625rem;
-		margin-bottom: 1rem;
+		margin-bottom: 0;
 	}
 
-	.section-label {
-		font-size: 0.8125rem;
+	.label {
+		font-size: 1rem;
 		margin-bottom: 0.5rem;
 	}
 
-	.project-description {
+	.description {
 		font-size: 0.8125rem;
 		opacity: 0.9;
 		line-height: 1.5;
+	}
+
+	.screenshots {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
 	}
 
 	.screenshot-counter {
@@ -334,7 +305,6 @@
 		border: 1px solid var(--terminal-green);
 	}
 
-	/* Buttons & Interactive Elements */
 	.screenshot-button {
 		padding: 0.5rem 1rem;
 		flex: 1;
@@ -349,26 +319,24 @@
 		background: rgba(10, 14, 39, 0.8);
 		font-size: 0.75rem;
 		min-width: 0;
+		white-space: nowrap;
 	}
 
-	/* Images & Media */
 	.screenshot-container {
 		position: relative;
 		overflow: hidden;
 		border-radius: 0.5rem;
-		aspect-ratio: 4 / 3;
 		width: 100%;
 		background: rgba(5, 8, 18, 0.8);
 	}
 
-	.screenshot-image {
+	img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
 	}
 
-	/* Tags */
-	.tech-tag {
+	.tag {
 		border: 1px solid var(--terminal-green);
 		color: var(--terminal-green);
 		padding: 0.25rem 0.75rem;
@@ -388,15 +356,19 @@
 			padding: 1.5rem;
 		}
 
+		.project-header {
+			grid-template-columns: 1fr auto;
+		}
+
 		.project-title {
 			font-size: 1.5rem;
 		}
 
-		.project-description {
+		.description {
 			font-size: 0.875rem;
 		}
 
-		.section-label {
+		.label {
 			font-size: 0.875rem;
 		}
 
@@ -406,18 +378,6 @@
 	}
 
 	@media (min-width: 1024px) {
-		.hero-title {
-			font-size: 4.5rem;
-		}
-
-		.hero-subtitle {
-			font-size: 1.125rem;
-		}
-
-		.hero-scroll {
-			font-size: 0.875rem;
-		}
-
 		.project-title {
 			font-size: 1.875rem;
 		}
@@ -426,9 +386,25 @@
 			padding: 2rem 1rem;
 		}
 
+		.label {
+			font-size: 1rem;
+		}
+
 		.project-layout {
 			grid-template-columns: 1fr 1fr;
 			gap: 2rem;
+		}
+	}
+
+	@media (max-width: 767px) {
+		.projects {
+			scroll-snap-type: none;
+		}
+
+		.project-card-container {
+			scroll-snap-align: none;
+			height: auto;
+			min-height: 100vh;
 		}
 	}
 </style>

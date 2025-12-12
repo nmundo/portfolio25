@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition'
-	import { Spring } from 'svelte/motion'
 
 	const experience = [
 		{
@@ -85,7 +84,7 @@
 		},
 		{
 			id: 'unc-charlotte',
-			title: 'Data Analytics Teaching Assistant',
+			title: 'Data Analytics TA',
 			company: 'UNC Charlotte',
 			start: new Date('2019-01-01'),
 			end: new Date('2020-01-01'),
@@ -137,8 +136,8 @@
 						<span class="company-name">@ {role.company}</span>
 					</h3>
 					<div class="tags">
-						{#each role.tags as tag}
-							<span class="tag">[{tag}]</span>
+						{#each role.tags as tag (tag)}
+							<span class="tag">{tag}</span>
 						{/each}
 					</div>
 				</div>
@@ -167,6 +166,8 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
+		height: 80vh;
+		overflow: scroll;
 	}
 
 	.item {
