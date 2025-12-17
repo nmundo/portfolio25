@@ -73,7 +73,7 @@
 
 	<section class="about">
 		<div class="content-container">
-			<h2 class="section-title" in:fade={{ duration: 600 }}>./about</h2>
+			<h2 class="section-title" in:fade={{ duration: 600 }}>./about NM</h2>
 			<p class="section-text" in:fade={{ duration: 600, delay: 100 }}>
 				I build responsive, user-focused web applications using modern front-end technologies. Over
 				the past 7+ years, I've worked across fintech, e-commerce, and manufacturing, migrating
@@ -82,12 +82,12 @@
 				browser and work on solutions that require knowledge outside web technologies; I am
 				full-stack through and through.
 			</p>
-			<p class="section-text" in:fade={{ duration: 600, delay: 200 }}>
+			<!-- <p class="section-text" in:fade={{ duration: 600, delay: 200 }}>
 				What sets me apart is my ability to explain complex technical concepts clearly. Teaching
 				full-stack development combined with working alongside non-technical decision-makers on
 				architectural and roadmap choices has given me the ability to articulate what needs to be
 				done and why.
-			</p>
+			</p> -->
 		</div>
 	</section>
 

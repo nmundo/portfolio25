@@ -168,6 +168,7 @@
 		gap: 1rem;
 		height: 80vh;
 		overflow: scroll;
+		padding-bottom: 2rem;
 	}
 
 	.item {
