@@ -89,7 +89,9 @@
 			start: new Date('2019-01-01'),
 			end: new Date('2020-01-01'),
 			location: 'Charlotte, NC',
-			points: [],
+			points: [
+				`Mentored boot camp students on coding assignments, offering guidance on debugging, best practices, and problem-solving to solidify their understanding of data analytics concepts. Supported classroom instruction for material covering SQL, Python, Flask, BeautifulSoup, and other tools, helping students apply concepts through hands-on exercises.`
+			],
 			tags: ['Teaching', 'JavaScript', 'Python', 'D3', 'Data Analytics']
 		},
 		{
@@ -99,7 +101,9 @@
 			start: new Date('2017-12-01'),
 			end: new Date('2018-05-01'),
 			location: 'Charlotte, NC',
-			points: [],
+			points: [
+				`Built and customized HTML, CSS, and JavaScript templates for digital menu boards while providing front-line support for clients using proprietary software. Initiated and led a skunkworks project to rewrite the company’s proprietary digital menu board software as a multi-platform Python application, enabling a future transition to more cost-effective Linux-based systems.`
+			],
 			tags: ['HTML', 'CSS', 'JavaScript', 'Python', 'Customer Support']
 		},
 		{
@@ -109,7 +113,9 @@
 			start: new Date('2013-10-01'),
 			end: new Date('2015-11-01'),
 			location: 'Charlotte, NC',
-			points: [],
+			points: [
+				`Developed and enhanced the company intranet by adding new features using HTML, CSS, jQuery, and Python while also providing ongoing maintenance to ensure site stability and usability. Maintained the internal wiki and related support documentation so team members had up-to-date technical resources and process guides.`
+			],
 			tags: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Python']
 		}
 	]

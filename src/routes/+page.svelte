@@ -73,7 +73,7 @@
 
 	<section class="about">
 		<div class="content-container">
-			<h2 class="section-title" in:fade={{ duration: 600 }}>./about NM</h2>
+			<h2 class="section-title" in:fade={{ duration: 600 }}>./about</h2>
 			<p class="section-text" in:fade={{ duration: 600, delay: 100 }}>
 				I build responsive, user-focused web applications using modern front-end technologies. Over
 				the past 7+ years, I've worked across fintech, e-commerce, and manufacturing, migrating
