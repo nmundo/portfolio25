@@ -105,7 +105,6 @@
 									<enhanced:img
 										src={resolve(project.screenshots[currentScreenshot[project.id] ?? 0])}
 										alt={`${project.title} screenshot ${(currentScreenshot[project.id] ?? 0) + 1}`}
-										in:fade={{ duration: 400 }}
 									/>
 								{/key}
 
@@ -328,10 +327,11 @@
 		overflow: hidden;
 		border-radius: 0.5rem;
 		width: 100%;
+		aspect-ratio: 1;
 		background: rgba(5, 8, 18, 0.8);
 	}
 
-	img {
+	enhanced\:img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
