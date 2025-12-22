@@ -104,9 +104,6 @@ body::before {
 	animation: glow 3s ease-in-out infinite;
 }
 
-.snap-section {
-}
-
 .content-container {
 	width: 100%;
 	max-width: 48rem;
