@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition'
-	import { resolve } from '$app/paths'
+	import Carousel from '$lib/Carousel.svelte'
 
 	interface Project {
 		id: string
@@ -11,8 +11,6 @@
 		github: string
 		liveUrl?: string
 	}
-
-	let currentScreenshot: { [key: string]: number } = $state({})
 
 	const projects: Project[] = [
 		{
@@ -33,35 +31,6 @@
 			github: 'https://github.com/nmundo/pd-ui'
 		}
 	]
-
-	function nextScreenshot(projectId: string) {
-		const project = projects.find((p) => p.id === projectId)
-		if (project) {
-			const current = currentScreenshot[projectId] ?? 0
-			currentScreenshot[projectId] = (current + 1) % project.screenshots.length
-		}
-	}
-
-	function prevScreenshot(projectId: string) {
-		const project = projects.find((p) => p.id === projectId)
-		if (project) {
-			const current = currentScreenshot[projectId] ?? 0
-			currentScreenshot[projectId] =
-				(current - 1 + project.screenshots.length) % project.screenshots.length
-		}
-	}
-
-	function initializeScreenshots() {
-		projects.forEach((project) => {
-			if (!(project.id in currentScreenshot)) {
-				currentScreenshot[project.id] = 0
-			}
-		})
-	}
-
-	$effect(() => {
-		initializeScreenshots()
-	})
 </script>
 
 <section class="projects">
@@ -100,29 +69,7 @@
 					<div class="project-layout">
 						<!-- Screenshot Slideshow -->
 						<div class="screenshots">
-							<div class="screenshot-container border-terminal">
-								{#key currentScreenshot[project.id]}
-									<enhanced:img
-										src={resolve(project.screenshots[currentScreenshot[project.id] ?? 0])}
-										alt={`${project.title} screenshot ${(currentScreenshot[project.id] ?? 0) + 1}`}
-									/>
-								{/key}
-
-								<div class="screenshot-counter">
-									{(currentScreenshot[project.id] ?? 0) + 1} / {project.screenshots.length}
-								</div>
-							</div>
-
-							{#if project.screenshots.length > 1}
-								<div class="controls-container">
-									<button onclick={() => prevScreenshot(project.id)} class="screenshot-button btn">
-										← prev
-									</button>
-									<button onclick={() => nextScreenshot(project.id)} class="screenshot-button btn">
-										next →
-									</button>
-								</div>
-							{/if}
+							<Carousel images={project.screenshots} />
 						</div>
 
 						<div class="details">
@@ -240,12 +187,6 @@
 		gap: 0.5rem;
 	}
 
-	.controls-container {
-		display: flex;
-		gap: 0.5rem;
-		justify-content: center;
-	}
-
 	.links-container {
 		display: flex;
 		gap: 1rem;
@@ -292,26 +233,6 @@
 		gap: 1rem;
 	}
 
-	.screenshot-counter {
-		position: absolute;
-		bottom: 0.5rem;
-		left: 0.5rem;
-		padding: 0.25rem 0.5rem;
-		border-radius: 0.25rem;
-		font-size: 0.75rem;
-		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
-		background: rgba(10, 14, 39, 0.8);
-		color: var(--terminal-green);
-		border: 1px solid var(--terminal-green);
-	}
-
-	.screenshot-button {
-		padding: 0.5rem 1rem;
-		flex: 1;
-		min-width: 0;
-		font-size: 0.75rem;
-	}
-
 	.project-link {
 		padding: 0.5rem 1rem;
 		flex: 1;
@@ -320,21 +241,6 @@
 		font-size: 0.75rem;
 		min-width: 0;
 		white-space: nowrap;
-	}
-
-	.screenshot-container {
-		position: relative;
-		overflow: hidden;
-		border-radius: 0.5rem;
-		width: 100%;
-		aspect-ratio: 1;
-		background: rgba(5, 8, 18, 0.8);
-	}
-
-	enhanced\:img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
 	}
 
 	.tag {
