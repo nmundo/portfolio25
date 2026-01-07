@@ -68,9 +68,7 @@
 
 					<div class="project-layout">
 						<!-- Screenshot Slideshow -->
-						<div class="screenshots">
-							<Carousel images={project.screenshots} />
-						</div>
+						<Carousel images={project.screenshots} />
 
 						<div class="details">
 							<div class="detail">
@@ -102,25 +100,6 @@
 
 	.border-terminal {
 		border: 1px solid var(--terminal-green);
-	}
-
-	.btn {
-		border: 1px solid var(--terminal-green);
-		color: var(--terminal-green);
-		background: rgba(10, 14, 39, 0.6);
-		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
-		font-weight: bold;
-		font-size: 0.875rem;
-		border-radius: 0.5rem;
-		cursor: pointer;
-		transition: all 0.2s ease;
-		text-decoration: none;
-		display: inline-block;
-		&:hover {
-			background: rgba(0, 255, 0, 0.1);
-			text-shadow: 0 0 10px var(--terminal-green);
-			transform: scale(1.05);
-		}
 	}
 
 	.details,
@@ -225,12 +204,6 @@
 		font-size: 0.8125rem;
 		opacity: 0.9;
 		line-height: 1.5;
-	}
-
-	.screenshots {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
 	}
 
 	.project-link {
