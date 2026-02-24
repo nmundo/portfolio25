@@ -88,6 +88,9 @@
 				architectural and roadmap choices has given me the ability to articulate what needs to be
 				done and why.
 			</p> -->
+			<div class="scroll-hint" in:fly={{ y: 40, duration: 800, delay: 400 }}>
+				▼ keep going ▼
+			</div>
 		</div>
 	</section>
 
@@ -110,7 +113,11 @@
 					</div>
 				{/each}
 			</div>
+			<div class="scroll-hint" in:fly={{ y: 40, duration: 800, delay: 400 }}>
+			▼ one more ▼
 		</div>
+		</div>
+		
 	</section>
 
 	<section class="experience">
