@@ -11,7 +11,8 @@
 
 	const links: NavLink[] = [
 		{ href: 'https://linkedin.com/in/nmundo', label: 'LinkedIn', cmd: '[ linkedin ]' },
-		{ href: 'https://github.com/nmundo', label: 'GitHub', cmd: '[ github ]' }
+		{ href: 'https://github.com/nmundo', label: 'GitHub', cmd: '[ github ]' },
+		{ href: 'https://drive.google.com/file/d/1uGu68A4bDLXJCe261G5vPiDWWmJ7gvTf/view?usp=sharing', label: 'Resume', cmd: '[ resume ]'}
 	]
 </script>
 
