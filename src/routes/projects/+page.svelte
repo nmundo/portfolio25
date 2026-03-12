@@ -129,6 +129,7 @@
 
 	.projects {
 		padding: 2rem;
+		padding-top: 5rem;
 		background: linear-gradient(135deg, rgba(10, 14, 39, 0.9) 0%, rgba(13, 17, 23, 0.9) 100%);
 		min-height: 100vh;
 	}
