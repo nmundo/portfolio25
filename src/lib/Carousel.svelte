@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths'
 	import { fade } from 'svelte/transition'
-	const { images } = $props()
+	const { images, ratio } = $props()
 
 	let currentImage = $state(0)
 
@@ -21,12 +21,12 @@
 </svelte:head>
 
 <div class="container">
-	<div class="image">
+	<div class="image" style:aspect-ratio={ratio}>
 		{#key currentImage}
 			<enhanced:img
 				transition:fade|global={{ duration: 50 }}
 				src={resolve(images[currentImage])}
-				alt={`screenshot`}
+				alt="screenshot"
 			/>
 		{/key}
 
@@ -55,7 +55,7 @@
 		overflow: hidden;
 		border-radius: 0.5rem;
 		width: 100%;
-		aspect-ratio: 1;
+		/*aspect-ratio: 1;*/
 		background: rgba(5, 8, 18, 0.8);
 		border: 1px solid var(--terminal-green);
 		enhanced\:img {

@@ -8,6 +8,7 @@
 		description: string
 		technologies: string[]
 		screenshots: string[]
+		imgRatio: string
 		github: string
 		liveUrl?: string
 	}
@@ -19,8 +20,23 @@
 			description: `A real-time Chicago Transit Authority train tracking application built with SvelteKit. Features live train position mapping, estimated arrival times with real-time and schedule-based predictions, searchable station database, and a responsive design optimized for quick access to transit information. Integrates CTA's official tracking systems to provide accurate, up-to-date departure and arrival estimates across Chicago's 'L' network.`,
 			technologies: ['SvelteKit', 'TypeScript'],
 			screenshots: ['/img/cta-tracker-1.jpg', '/img/cta-tracker-2.jpg'],
+			imgRatio: '1',
 			github: 'https://github.com/nmundo/cta-tracker',
 			liveUrl: 'https://cta-tracker-pi.vercel.app/cta-tracker/'
+		},
+		{
+			id: 'bus-bunching-tracker',
+			title: 'Bus Bunching Tracker',
+			description:
+				'A web application that visualizes bus bunching in real-time using data from the Chicago Transit Authority. The app displays live bus locations, identifies instances of bus bunching, and provides insights into transit efficiency. Built with SvelteKit and TypeScript, it offers an interactive map interface and data-driven visualizations to help users understand and track bus performance.',
+			technologies: ['SvelteKit', 'TypeScript', 'PostgreSQL'],
+			screenshots: [
+				'/img/bus-bunching-1.png',
+				'/img/bus-bunching-2.png',
+				'/img/bus-bunching-3.png'
+			],
+			imgRatio: '4 / 3',
+			github: 'https://github.com/nmundo/bus-bunching-tracker'
 		},
 		{
 			id: 'pd-ui',
@@ -28,6 +44,7 @@
 			description: 'A collection of UI components for the Playdate console.',
 			technologies: ['Lua'],
 			screenshots: ['/img/pd-ui-1.png'],
+			imgRatio: '1',
 			github: 'https://github.com/nmundo/pd-ui'
 		}
 	]
@@ -68,8 +85,7 @@
 
 					<div class="project-layout">
 						<!-- Screenshot Slideshow -->
-						<Carousel images={project.screenshots} />
-
+						<Carousel images={project.screenshots} ratio={project.imgRatio} />
 						<div class="details">
 							<div class="detail">
 								<h3 class="label text-terminal">// description</h3>
@@ -112,43 +128,36 @@
 	/* Layout & Structure */
 
 	.projects {
-		padding: 5rem 0 0 0;
+		padding: 2rem;
 		background: linear-gradient(135deg, rgba(10, 14, 39, 0.9) 0%, rgba(13, 17, 23, 0.9) 100%);
-		height: 100vh;
-		overflow-y: scroll;
-		scroll-snap-type: y mandatory;
+		min-height: 100vh;
 	}
 
 	.projects-grid {
-		display: flex;
-		flex-direction: column;
-		gap: 0;
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2rem;
 		padding: 0;
 		margin: 0;
-		max-width: 100%;
+		max-width: 1400px;
+		margin: 0 auto;
 	}
 
 	.project-card-container {
-		height: 100vh;
 		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 1rem;
-		scroll-snap-align: center;
+		align-items: stretch;
+		padding: 0;
 	}
 
 	.project-card {
 		background: rgba(10, 14, 39, 0.6);
 		color: var(--terminal-green);
-		padding: 1rem;
+		padding: 1.5rem;
 		border-radius: 0.5rem;
 		box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
-		flex-shrink: 0;
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
 		width: 100%;
-		max-width: 50rem;
 		position: relative;
 	}
 
@@ -228,12 +237,14 @@
 	}
 
 	@media (min-width: 768px) {
-		.project-card-container {
-			padding: 1.5rem;
+		.projects-grid {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 2rem;
 		}
 
-		.project-card {
-			padding: 1.5rem;
+		.projects {
+			padding: 3rem;
+			padding-top: 6rem;
 		}
 
 		.project-header {
@@ -263,7 +274,7 @@
 		}
 
 		.project-card {
-			padding: 2rem 1rem;
+			padding: 2rem 1.5rem;
 		}
 
 		.label {
@@ -271,20 +282,7 @@
 		}
 
 		.project-layout {
-			grid-template-columns: 1fr 1fr;
 			gap: 2rem;
-		}
-	}
-
-	@media (max-width: 767px) {
-		.projects {
-			scroll-snap-type: none;
-		}
-
-		.project-card-container {
-			scroll-snap-align: none;
-			height: auto;
-			min-height: 100vh;
 		}
 	}
 </style>
