@@ -22,7 +22,7 @@
 			screenshots: ['/img/cta-tracker-1.jpg', '/img/cta-tracker-2.jpg'],
 			imgRatio: '1',
 			github: 'https://github.com/nmundo/cta-tracker',
-			liveUrl: 'https://cta-tracker-pi.vercel.app/cta-tracker/'
+			liveUrl: 'https://cta-tracker.nathanmundo.com/cta-tracker/'
 		},
 		{
 			id: 'bus-bunching-tracker',
@@ -36,7 +36,8 @@
 				'/img/bus-bunching-3.png'
 			],
 			imgRatio: '4 / 3',
-			github: 'https://github.com/nmundo/bus-bunching-tracker'
+			github: 'https://github.com/nmundo/bus-bunching-tracker',
+			liveUrl: 'https://bus-bunching.nathanmundo.com'
 		},
 		{
 			id: 'pd-ui',
