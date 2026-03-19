@@ -70,7 +70,7 @@
 									rel="noopener noreferrer"
 									class="project-link btn"
 								>
-									[ live ]
+									[ demo ]
 								</a>
 							{/if}
 							<a
