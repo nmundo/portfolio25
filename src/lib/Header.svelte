@@ -15,7 +15,7 @@
 		{ href: 'https://linkedin.com/in/nmundo', label: 'LinkedIn', cmd: '[ linkedin ]' },
 		{ href: 'https://github.com/nmundo', label: 'GitHub', cmd: '[ github ]' },
 		{
-			href: 'https://drive.google.com/file/d/1GPoCWk8pdw0AYCAnKqQAwL6rDMc3qVJl/view?usp=sharing',
+			href: 'https://drive.google.com/file/d/1a8WCc6OohXWTOE4O2J_kJvXNbZea4ejF/view?usp=sharing',
 			label: 'Resume',
 			cmd: '[ resume ]'
 		}
