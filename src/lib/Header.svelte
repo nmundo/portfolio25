@@ -30,7 +30,7 @@
 	}
 </script>
 
-<div id="header" in:fade={{ duration: 800, delay: 800 }}>
+<div id="header" in:fade={{ duration: 300, delay: 100 }}>
 	<div class="nav">
 		{#if page.url.pathname === resolve('/')}
 			<a href={resolve('/projects')} class="button"> [ projects ] </a>
@@ -43,7 +43,7 @@
 		<div class="desktop-links">
 			{#each links as link (link.label)}
 				<a
-					in:fade={{ duration: 800, delay: 300 }}
+					in:fade={{ duration: 300, delay: 180 }}
 					href={link.href}
 					target="_blank"
 					rel="noopener noreferrer"
@@ -147,7 +147,7 @@
 		background: transparent;
 		border: none;
 		cursor: pointer;
-		transition: all 0.3s ease;
+		transition: all 0.2s ease;
 		text-decoration: none;
 		text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
 		border-radius: 0.25rem;
@@ -174,7 +174,7 @@
 		background: rgba(10, 14, 39, 0.6);
 		border-radius: 0.5rem;
 		cursor: pointer;
-		transition: all 0.3s ease;
+		transition: all 0.2s ease;
 		text-decoration: none;
 		text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
 		@media (min-width: 768px) {

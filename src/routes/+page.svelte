@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition'
+	import { cubicOut } from 'svelte/easing'
 	import Experience from '../lib/Experience.svelte'
 
 	let terminalLines = $state<string[]>([])
@@ -40,7 +41,7 @@
 				} else {
 					clearInterval(timer)
 				}
-			}, 80)
+			}, 55)
 
 			return () => clearInterval(timer)
 		}
@@ -65,7 +66,7 @@
 				{/if}
 			</div>
 
-			<div class="scroll-hint" in:fly={{ y: 40, duration: 800, delay: 400 }}>
+			<div class="scroll-hint" in:fly={{ y: 20, duration: 350, delay: 200, easing: cubicOut }}>
 				▼ scroll to see more ▼
 			</div>
 		</div>
@@ -73,8 +74,8 @@
 
 	<section class="about">
 		<div class="content-container">
-			<h2 class="section-title" in:fade={{ duration: 600 }}>./about</h2>
-			<p class="section-text" in:fade={{ duration: 600, delay: 100 }}>
+			<h2 class="section-title" in:fade={{ duration: 300 }}>./about</h2>
+			<p class="section-text" in:fade={{ duration: 350, delay: 80 }}>
 				I build responsive, user-focused web applications using modern front-end technologies. Over
 				the past 7+ years, I've worked across fintech, e-commerce, and manufacturing, migrating
 				legacy systems to React, optimizing UI performance, creating dashboards to visualize company
@@ -82,7 +83,9 @@
 				browser and work on solutions that require knowledge outside web technologies; I am
 				full-stack through and through.
 			</p>
-			<div class="scroll-hint" in:fly={{ y: 40, duration: 800, delay: 400 }}>▼ keep going ▼</div>
+			<div class="scroll-hint" in:fly={{ y: 20, duration: 350, delay: 200, easing: cubicOut }}>
+				▼ keep going ▼
+			</div>
 		</div>
 	</section>
 
@@ -91,13 +94,13 @@
 			<h2 class="section-title">./skills</h2>
 			<div class="skills-grid">
 				{#each Object.entries(skills) as [category, items], i (category)}
-					<div class="skill-category" in:fade={{ duration: 600, delay: i * 100 }}>
+					<div class="skill-category" in:fade={{ duration: 300, delay: i * 60 }}>
 						<h3 class="skill-category-title">
 							→ {category}
 						</h3>
 						<div class="skills-tags">
 							{#each items as skill, j (skill)}
-								<span class="skill-tag" in:fade={{ duration: 400, delay: i * 100 + j * 30 }}>
+								<span class="skill-tag" in:fade={{ duration: 250, delay: i * 60 + j * 25 }}>
 									{skill}
 								</span>
 							{/each}
@@ -105,13 +108,15 @@
 					</div>
 				{/each}
 			</div>
-			<div class="scroll-hint" in:fly={{ y: 40, duration: 800, delay: 400 }}>▼ one more ▼</div>
+			<div class="scroll-hint" in:fly={{ y: 20, duration: 350, delay: 200, easing: cubicOut }}>
+				▼ one more ▼
+			</div>
 		</div>
 	</section>
 
 	<section class="experience">
 		<div class="content-container">
-			<h2 class="section-title" in:fade={{ duration: 600 }}>./experience</h2>
+			<h2 class="section-title" in:fade={{ duration: 300 }}>./experience</h2>
 			<Experience />
 		</div>
 	</section>
@@ -120,8 +125,11 @@
 <style>
 	.page-wrapper {
 		scroll-snap-type: y mandatory;
+		/* keep snapped sections clear of the fixed 5rem header */
+		scroll-padding-top: 5rem;
 		overflow-y: scroll;
 		height: 100vh;
+		height: 100dvh;
 	}
 
 	.hero,
@@ -130,11 +138,15 @@
 	.experience {
 		scroll-snap-align: start;
 		scroll-snap-stop: always;
+		/* dvh tracks the visible viewport so snapping stays correct as the
+		   mobile URL bar shows/hides (vh fallback for older browsers) */
 		height: 100vh;
+		height: 100dvh;
 		min-height: 100vh;
+		min-height: 100dvh;
 		border-bottom: 2px solid var(--terminal-green);
 		background: linear-gradient(135deg, #050812 0%, #0a0e27 50%, #050812 100%);
-		padding: 5rem 1rem;
+		padding: 1.5rem 1rem;
 	}
 
 	.hero {
@@ -267,7 +279,7 @@
 		border-radius: 0.5rem;
 		background: rgba(10, 14, 39, 0.7);
 		box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
-		transition: all 0.3s ease;
+		transition: all 0.2s ease;
 	}
 
 	.skill-category:hover {

@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { fade, fly } from 'svelte/transition'
+	import { fade, slide } from 'svelte/transition'
+	import { cubicOut } from 'svelte/easing'
 
 	const experience = [
 		{
@@ -133,7 +134,7 @@
 			class="item"
 			class:expanded={expandedRole === role.id}
 			onclick={() => toggleRole(role.id)}
-			in:fade={{ duration: 600, delay: i * 50 }}
+			in:fade={{ duration: 300, delay: i * 40 }}
 		>
 			<div class="header">
 				<div>
@@ -157,7 +158,7 @@
 			</div>
 
 			{#if expandedRole === role.id}
-				<ul class="details" in:fly={{ y: -10, duration: 300 }}>
+				<ul class="details" transition:slide={{ duration: 280, easing: cubicOut }}>
 					{#each role.points as point (point)}
 						<li>{point}</li>
 					{/each}
@@ -187,7 +188,7 @@
 		border-radius: 0.5rem;
 		background: rgba(10, 14, 39, 0.6);
 		opacity: 0.8;
-		transition: all 0.3s ease;
+		transition: all 0.2s ease;
 		&:hover {
 			opacity: 1;
 			box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
@@ -288,7 +289,7 @@
 		right: 0;
 		font-size: 1.125rem;
 		color: var(--terminal-green);
-		transition: transform 0.3s ease;
+		transition: transform 0.2s ease;
 		&.rotated {
 			transform: rotateZ(180deg);
 		}
