@@ -1,13 +1,33 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition'
+	import type { Picture } from 'vite-imagetools'
 	import Carousel from '$lib/Carousel.svelte'
+
+	// Build-time import of project screenshots so @sveltejs/enhanced-img can
+	// generate optimized avif/webp at multiple sizes. enhanced-img only
+	// processes images imported at build time, so the raw files must live under
+	// src/ (not static/) and be referenced through this glob.
+	const enhancedImages = import.meta.glob<Picture>('/src/lib/assets/projects/*.{png,jpg,jpeg}', {
+		eager: true,
+		query: { enhanced: true },
+		import: 'default'
+	})
+
+	function screenshot(file: string): Picture {
+		return enhancedImages[`/src/lib/assets/projects/${file}`]
+	}
+
+	interface Screenshot {
+		file: string
+		alt: string
+	}
 
 	interface Project {
 		id: string
 		title: string
 		description: string
 		technologies: string[]
-		screenshots: string[]
+		screenshots: Screenshot[]
 		imgRatio: string
 		github: string
 		liveUrl?: string
@@ -19,7 +39,16 @@
 			title: 'CTA Tracker',
 			description: `A real-time Chicago Transit Authority train tracking application built with SvelteKit. Features live train position mapping, estimated arrival times with real-time and schedule-based predictions, searchable station database, and a responsive design optimized for quick access to transit information. Integrates CTA's official tracking systems to provide accurate, up-to-date departure and arrival estimates across Chicago's 'L' network.`,
 			technologies: ['SvelteKit', 'TypeScript'],
-			screenshots: ['/img/cta-tracker-1.jpg', '/img/cta-tracker-2.jpg'],
+			screenshots: [
+				{
+					file: 'cta-tracker-1.jpg',
+					alt: "CTA Tracker showing arrival times of Chicago 'L' trains"
+				},
+				{
+					file: 'cta-tracker-2.jpg',
+					alt: "CTA Tracker showing arrival times of Chicago 'L' trains"
+				}
+			],
 			imgRatio: '1',
 			github: 'https://github.com/nmundo/cta-tracker',
 			liveUrl: 'https://cta-tracker.nathanmundo.com/cta-tracker/'
@@ -31,9 +60,18 @@
 				'A web application that visualizes bus bunching in real-time using data from the Chicago Transit Authority. The app displays live bus locations, identifies instances of bus bunching, and provides insights into transit efficiency. Built with SvelteKit and TypeScript, it offers an interactive map interface and data-driven visualizations to help users understand and track bus performance.',
 			technologies: ['SvelteKit', 'TypeScript', 'PostgreSQL'],
 			screenshots: [
-				'/img/bus-bunching-1.png',
-				'/img/bus-bunching-2.png',
-				'/img/bus-bunching-3.png'
+				{
+					file: 'bus-bunching-1.png',
+					alt: 'Bus Bunching Tracker with list of CTA bus routes and their bunching stats'
+				},
+				{
+					file: 'bus-bunching-2.png',
+					alt: 'Bus Bunching Tracker highlighting clustered buses where bunching occurs'
+				},
+				{
+					file: 'bus-bunching-3.png',
+					alt: 'Bus Bunching Tracker visualization of bus spacing and headway over time'
+				}
 			],
 			imgRatio: '4 / 3',
 			github: 'https://github.com/nmundo/bus-bunching-tracker',
@@ -44,7 +82,12 @@
 			title: 'Playdate UI Library',
 			description: 'A collection of UI components for the Playdate console.',
 			technologies: ['Lua'],
-			screenshots: ['/img/pd-ui-1.png'],
+			screenshots: [
+				{
+					file: 'pd-ui-1.png',
+					alt: 'Playdate UI Library components rendered on the Playdate console screen'
+				}
+			],
 			imgRatio: '1',
 			github: 'https://github.com/nmundo/pd-ui'
 		}
@@ -52,6 +95,7 @@
 </script>
 
 <section class="projects">
+	<h1 class="sr-only">Projects</h1>
 	<div class="projects-grid">
 		{#each projects as project, i (project.id)}
 			<div in:fade={{ duration: 600, delay: i * 100 }} class="project-card-container">
@@ -86,7 +130,13 @@
 
 					<div class="project-layout">
 						<!-- Screenshot Slideshow -->
-						<Carousel images={project.screenshots} ratio={project.imgRatio} />
+						<Carousel
+							images={project.screenshots.map((s) => ({
+								src: screenshot(s.file),
+								alt: s.alt
+							}))}
+							ratio={project.imgRatio}
+						/>
 						<div class="details">
 							<div class="detail">
 								<h3 class="label text-terminal">// description</h3>
