@@ -98,8 +98,19 @@
 	<h1 class="sr-only">Projects</h1>
 	<div class="projects-grid">
 		{#each projects as project, i (project.id)}
-			<div in:fade={{ duration: 600, delay: i * 100 }} class="project-card-container">
-				<div class="project-card border-terminal">
+			<article in:fade={{ duration: 300, delay: i * 80 }} class="project-card border-terminal">
+				<div class="project-media">
+					<!-- Screenshot Slideshow -->
+					<Carousel
+						images={project.screenshots.map((s) => ({
+							src: screenshot(s.file),
+							alt: s.alt
+						}))}
+						ratio={project.imgRatio}
+					/>
+				</div>
+
+				<div class="project-body">
 					<div class="project-header">
 						<div class="title-section">
 							<h2 class="project-title text-terminal">{project.title}</h2>
@@ -128,33 +139,23 @@
 						</div>
 					</div>
 
-					<div class="project-layout">
-						<!-- Screenshot Slideshow -->
-						<Carousel
-							images={project.screenshots.map((s) => ({
-								src: screenshot(s.file),
-								alt: s.alt
-							}))}
-							ratio={project.imgRatio}
-						/>
-						<div class="details">
-							<div class="detail">
-								<h3 class="label text-terminal">// description</h3>
-								<p class="description text-terminal">{project.description}</p>
-							</div>
+					<div class="details">
+						<div class="detail">
+							<h3 class="label text-terminal">// description</h3>
+							<p class="description text-terminal">{project.description}</p>
+						</div>
 
-							<div class="detail">
-								<h3 class="label text-terminal">// technologies</h3>
-								<div class="tags">
-									{#each project.technologies as tech (tech)}
-										<span class="tag">{tech}</span>
-									{/each}
-								</div>
+						<div class="detail">
+							<h3 class="label text-terminal">// technologies</h3>
+							<div class="tags">
+								{#each project.technologies as tech (tech)}
+									<span class="tag">{tech}</span>
+								{/each}
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</article>
 		{/each}
 	</div>
 </section>
@@ -180,25 +181,17 @@
 
 	.projects {
 		padding: 2rem;
-		padding-top: 5rem;
+		padding-top: 6rem;
 		background: linear-gradient(135deg, rgba(10, 14, 39, 0.9) 0%, rgba(13, 17, 23, 0.9) 100%);
 		min-height: 100vh;
 	}
 
 	.projects-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 2rem;
-		padding: 0;
-		margin: 0;
-		max-width: 1400px;
-		margin: 0 auto;
-	}
-
-	.project-card-container {
 		display: flex;
-		align-items: stretch;
-		padding: 0;
+		flex-direction: column;
+		gap: 2rem;
+		max-width: 1100px;
+		margin: 0 auto;
 	}
 
 	.project-card {
@@ -209,16 +202,24 @@
 		box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
 		display: flex;
 		flex-direction: column;
+		gap: 1.5rem;
 		width: 100%;
-		position: relative;
+		transition: box-shadow 0.2s ease;
 	}
 
-	.project-layout {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.5rem;
-		margin-top: 1rem;
-		width: 100%;
+	.project-card:hover {
+		box-shadow: 0 0 25px rgba(0, 255, 0, 0.18);
+	}
+
+	.project-media,
+	.project-body {
+		min-width: 0;
+	}
+
+	.project-body {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
 	}
 
 	.tags {
@@ -237,7 +238,6 @@
 		grid-template-columns: 1fr;
 		align-items: start;
 		gap: 1rem;
-		margin-bottom: 1rem;
 	}
 
 	.title-section {
@@ -289,14 +289,17 @@
 	}
 
 	@media (min-width: 768px) {
-		.projects-grid {
-			grid-template-columns: repeat(2, 1fr);
-			gap: 2rem;
-		}
-
 		.projects {
 			padding: 3rem;
-			padding-top: 6rem;
+			padding-top: 7rem;
+		}
+
+		/* screenshot on the left, title + details on the right */
+		.project-card {
+			display: grid;
+			grid-template-columns: minmax(240px, 360px) 1fr;
+			gap: 2rem;
+			align-items: start;
 		}
 
 		.project-header {
@@ -314,27 +317,20 @@
 		.label {
 			font-size: 0.875rem;
 		}
-
-		.project-layout {
-			gap: 2rem;
-		}
 	}
 
 	@media (min-width: 1024px) {
+		.project-card {
+			grid-template-columns: minmax(280px, 400px) 1fr;
+			padding: 2rem;
+		}
+
 		.project-title {
 			font-size: 1.875rem;
 		}
 
-		.project-card {
-			padding: 2rem 1.5rem;
-		}
-
 		.label {
 			font-size: 1rem;
-		}
-
-		.project-layout {
-			gap: 2rem;
 		}
 	}
 </style>
