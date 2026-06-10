@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Picture } from 'vite-imagetools'
-	import { fade } from 'svelte/transition'
+	import { fly } from 'svelte/transition'
+	import { cubicOut } from 'svelte/easing'
 
 	interface CarouselImage {
 		src: Picture
@@ -10,12 +11,16 @@
 	const { images, ratio }: { images: CarouselImage[]; ratio: string } = $props()
 
 	let currentImage = $state(0)
+	// +1 when advancing, -1 when going back, so the slide direction matches intent
+	let direction = $state(1)
 
 	function next() {
+		direction = 1
 		currentImage = (currentImage + 1) % images.length
 	}
 
 	function prev() {
+		direction = -1
 		currentImage = (currentImage - 1 + images.length) % images.length
 	}
 </script>
@@ -23,12 +28,17 @@
 <div class="container">
 	<div class="image" style:aspect-ratio={ratio}>
 		{#key currentImage}
-			<enhanced:img
-				transition:fade|global={{ duration: 50 }}
-				src={images[currentImage].src}
-				alt={images[currentImage].alt}
-				sizes="(min-width: 768px) 45vw, 90vw"
-			/>
+			<div
+				class="slide"
+				in:fly={{ x: direction * 30, duration: 260, easing: cubicOut }}
+				out:fly={{ x: direction * -30, duration: 260, easing: cubicOut }}
+			>
+				<enhanced:img
+					src={images[currentImage].src}
+					alt={images[currentImage].alt}
+					sizes="(min-width: 1024px) 400px, (min-width: 768px) 360px, 92vw"
+				/>
+			</div>
 		{/key}
 
 		<div class="counter">
@@ -63,11 +73,19 @@
 			width: 100%;
 			height: 100%;
 			object-fit: cover;
+			display: block;
 		}
+	}
+
+	/* Stacked so the outgoing and incoming images overlap while sliding */
+	.slide {
+		position: absolute;
+		inset: 0;
 	}
 
 	.counter {
 		position: absolute;
+		z-index: 2;
 		bottom: 0.5rem;
 		left: 0.5rem;
 		padding: 0.25rem 0.5rem;
