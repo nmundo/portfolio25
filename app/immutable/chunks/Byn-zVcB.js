@@ -1,0 +1,1 @@
+import{b as t,r as s,s as o,p as e}from"./DZF0iu2Z.js";const a="";function p(...r){return t+a+s(r[0],r[1])}const u={get error(){return e.error},get route(){return e.route},get status(){return e.status},get url(){return e.url}};o.updated.check;const c=u;export{c as p,p as r};
