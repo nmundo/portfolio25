@@ -1,7 +1,13 @@
 <script lang="ts">
-	import { resolve } from '$app/paths'
+	import type { Picture } from 'vite-imagetools'
 	import { fade } from 'svelte/transition'
-	const { images, ratio } = $props()
+
+	interface CarouselImage {
+		src: Picture
+		alt: string
+	}
+
+	const { images, ratio }: { images: CarouselImage[]; ratio: string } = $props()
 
 	let currentImage = $state(0)
 
@@ -14,19 +20,14 @@
 	}
 </script>
 
-<svelte:head>
-	{#each images as image (image)}
-		<link rel="preload" as="image" href={resolve(image)} />
-	{/each}
-</svelte:head>
-
 <div class="container">
 	<div class="image" style:aspect-ratio={ratio}>
 		{#key currentImage}
 			<enhanced:img
 				transition:fade|global={{ duration: 50 }}
-				src={resolve(images[currentImage])}
-				alt="screenshot"
+				src={images[currentImage].src}
+				alt={images[currentImage].alt}
+				sizes="(min-width: 768px) 45vw, 90vw"
 			/>
 		{/key}
 

@@ -142,7 +142,7 @@
 		padding: 0.5rem 1rem;
 		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
 		font-weight: bold;
-		font-size: 0.6rem;
+		font-size: 0.75rem;
 		color: var(--terminal-green);
 		background: transparent;
 		border: none;
@@ -163,12 +163,12 @@
 		}
 	}
 
-	.button {
-		display: inline-block;
+	.button,
+	.dropdown-toggle {
 		padding: 0.5rem 1rem;
 		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
 		font-weight: bold;
-		font-size: 0.6rem;
+		font-size: 0.75rem;
 		color: var(--terminal-green);
 		border: 2px solid var(--terminal-green);
 		background: rgba(10, 14, 39, 0.6);
@@ -190,27 +190,7 @@
 		}
 	}
 
-	.dropdown-toggle {
-		padding: 0.5rem 1rem;
-		font-family: 'JetBrains Mono', 'Courier Prime', monospace;
-		font-weight: bold;
-		font-size: 0.6rem;
-		color: var(--terminal-green);
-		border: 2px solid var(--terminal-green);
-		background: rgba(10, 14, 39, 0.6);
-		border-radius: 0.5rem;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		text-decoration: none;
-		text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-
-		&:hover {
-			background: rgba(0, 255, 0, 0.1);
-			transform: scale(1.05);
-		}
-
-		&:active {
-			transform: scale(0.95);
-		}
+	.button {
+		display: inline-block;
 	}
 </style>
