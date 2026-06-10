@@ -11,10 +11,10 @@ const config = {
 		// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
 		// See https://svelte.dev/docs/kit/adapters for more information about adapters.
 		adapter: adapter(),
-		appDir: 'app',
-		paths: {
-			base: process.argv.includes('dev') ? '' : '/portfolio25'
-		}
+		appDir: 'app'
+		// Deployed to the root of the custom domain (nathanmundo.com via static/CNAME),
+		// so no base path. A `/portfolio25` base would break enhanced-img srcset URLs,
+		// which SvelteKit does not rewrite to relative paths.
 		// prerender: {
 		// 	crawl: true,
 		// 	entries: ['*']
