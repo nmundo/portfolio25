@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition'
-	import { Spring } from 'svelte/motion'
 	import Experience from '../lib/Experience.svelte'
 
 	let terminalLines = $state<string[]>([])
@@ -49,6 +48,7 @@
 </script>
 
 <div class="page-wrapper">
+	<h1 class="sr-only">Nathan Mundo — Full Stack Engineer</h1>
 	<section class="hero" role="banner">
 		<div class="content">
 			<div class="terminal">
@@ -82,12 +82,6 @@
 				browser and work on solutions that require knowledge outside web technologies; I am
 				full-stack through and through.
 			</p>
-			<!-- <p class="section-text" in:fade={{ duration: 600, delay: 200 }}>
-				What sets me apart is my ability to explain complex technical concepts clearly. Teaching
-				full-stack development combined with working alongside non-technical decision-makers on
-				architectural and roadmap choices has given me the ability to articulate what needs to be
-				done and why.
-			</p> -->
 			<div class="scroll-hint" in:fly={{ y: 40, duration: 800, delay: 400 }}>▼ keep going ▼</div>
 		</div>
 	</section>
